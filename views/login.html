@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <p></p>
+    </div>
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <div class="card-panel">
+                <div class="row">
+                    <div class="col s12">
+                        <h4 class="cyan-text">Login</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label>Login</label>
+                        <input ng-model="user.login" type="text" class="validate">
+                    </div>
+                    <div class="input-field col s12">
+                        <label>Senha</label>
+                        <input ng-model="user.passw" type="password" class="validate">
+                    </div>
+                    <div class="input-field col">
+                        <a ng-click="doLogin(user)" class="waves-effect waves-light cyan darken-3 btn"><i class="material-icons left">send</i> Entrar</a>
+                    </div>
+                    <div class="col right">
+                        <small><a href="" class="grey-text left" style="text-align: right">Recuperar senha</a></small>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <p></p>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="cadweb">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="styles/custom.css">
+</head>
+<body>
+    <div class="wrap">
+        <nav id="menu" class="cyan">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <!-- menu esquerdo -->
+                    <ul class="left">
+                        <li><a href="#"><i class="material-icons">home</i></a></li>
+                        <li><a href="" class="dropdown-button" data-activates="dd-admin">Administrativo</a></li>
+                        <li><a href="">Ensino</a></li>
+                        <li><a href="" class="dropdown-button" data-activates="dd-project" hover="true">Projetos</a></li>
+                        <li><a href="">Reuniões</a></li>
+                    </ul>
+                    <ul id="dd-admin" class="dropdown-content">
+                        <li><a href="#!/usuario" class="cyan-text">Cadastro de Usuário</a></li>
+                        <li><a href="#!/discentes" class="cyan-text">Cadastro de Discentes</a></li>
+                        <li><a href="#!/docentes" class="cyan-text">Cadastro de Docentes</a></li>
+                        <li><a href="#!/setores" class="cyan-text">Cadastro de Setores</a></li>
+                    </ul>
+                    <ul id="dd-project" class="dropdown-content" >
+                        <li><a href="#!/usuario" class="cyan-text">Projetos de Pesquisa</a></li>
+                        <li><a href="#!/usuario" class="cyan-text">Projetos de Extensão</a></li>
+                    </ul>
+
+                    <!-- menu direito -->
+                    <ul class="right">
+                        <li><a href="#!/login" ng-click="doLogout()">
+                            {{ session.logged ? 'Sair' : 'Entrar'}}
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div id="content" ng-view></div>
+
+        <footer id="footer" class="page-footer cyan">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Contato</h5>
+                        <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Social</h5>
+                        <ul>
+                            <li><a class="grey-text text-lighten-3" href="">Facebook</a></li>
+                            <li><a class="grey-text text-lighten-3" href="">Twitter</a></li>
+                            <li><a class="grey-text text-lighten-3" href="">Youtube</a></li>
+                            <li><a class="grey-text text-lighten-3" href="">Skype</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2017 Copyright
+                    <a class="grey-text text-lighten-4 right" href="#!">Extreme Go Horse Team</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- npm modules -->
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-route/angular-route.min.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+
+    <!-- app scripts -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/routes.js"></script>
+    <script src="scripts/components/dropdown-button.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/home.js"></script>
+    <script src="scripts/controllers/usuario.js"></script>
+</body>
+</html>
