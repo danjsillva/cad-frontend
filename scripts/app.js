@@ -1,30 +1,33 @@
 /*
 * App module of the cadweb
 */
+
+// url base do dominio do backend
+var domainUrl = 'http://cadweb.us-west-2.elasticbeanstalk.com';
+
 angular
 .module('cadweb', [
     'ngRoute',
+    'satellizer',
+    'toaster',
 ])
-.run(function ($rootScope, $location) {
-    // inicializa as variaveis de sessao
-    $rootScope.session = {
-        'user': undefined,
-        'logged': false,
-    };
-
+.constant('api', {
+    baseUrl: domainUrl + '/api/v1',
+    loginUrl: domainUrl + '/api/v1/security/token'
+})
+.run(function ($rootScope, $location, $auth) {
     // verificações a cada rota acessada
     $rootScope.$on('$routeChangeSuccess', function() {
+        $rootScope.isAuthenticated = $auth.isAuthenticated();
+
         // se nao tiver logado redireciona para a pagina de login
-        if (!$rootScope.session.logged && $location.path() != '/') {
-            // $location.path('/login');
+        if (!$rootScope.isAuthenticated && $location.path() != '/') {
+            $location.path('/login');
         }
     });
 
     // logout... reseta as variaveis de sessao
     $rootScope.doLogout = function () {
-        $rootScope.session = {
-            'user': undefined,
-            'logged': false,
-        };
+        $auth.logout();
     };
 });

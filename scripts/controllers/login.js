@@ -3,11 +3,19 @@
 */
 angular
 .module('cadweb')
-.controller('LoginCtrl', function ($rootScope, $scope, $location) {
+.controller('LoginCtrl', function ($rootScope, $scope, $location, $auth) {
     $scope.doLogin = function (user) {
-        $rootScope.session.user = user;
-        $rootScope.session.logged = true;
+        params = "grant_type=password&username=" + user.username + "&password=" + user.password
 
-        $location.path('/');
+        $auth.login(params).then(
+            function (response) {
+                $auth.setToken(response.data.access_token);
+
+                $location.path('/');
+            },
+            function (response) {
+                console.log(response);
+            }
+        );
     };
 });

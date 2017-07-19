@@ -3,9 +3,8 @@
 */
 angular
 .module('cadweb')
-.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+.config(function(api, $routeProvider, $locationProvider, $authProvider) {
     $routeProvider
-
     .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
@@ -23,4 +22,4 @@ angular
     });
 
     // $locationProvider.html5Mode(true);
-}]);
+});

@@ -5,6 +5,7 @@
     <title></title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="node_modules/angularjs-toaster/toaster.min.css">
     <link rel="stylesheet" href="styles/custom.css">
 </head>
 <body>
@@ -34,12 +35,14 @@
                     <!-- menu direito -->
                     <ul class="right">
                         <li><a href="#!/login" ng-click="doLogout()">
-                            {{ session.logged ? 'Sair' : 'Entrar'}}
+                            {{ isAuthenticated ? 'Sair' : 'Entrar'}}
                         </a></li>
                     </ul>
                 </div>
             </div>
         </nav>
+
+        <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
 
         <div id="content" ng-view></div>
 
@@ -73,12 +76,16 @@
     <!-- npm modules -->
     <script src="node_modules/angular/angular.min.js"></script>
     <script src="node_modules/angular-route/angular-route.min.js"></script>
+    <script src="node_modules/angularjs-toaster/toaster.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+    <script src="node_modules/satellizer/dist/satellizer.min.js"></script>
 
     <!-- app scripts -->
     <script src="scripts/app.js"></script>
     <script src="scripts/routes.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/components/notification.js"></script>
     <script src="scripts/components/dropdown-button.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/home.js"></script>

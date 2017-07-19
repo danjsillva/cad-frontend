@@ -11,6 +11,8 @@
   "dependencies": {
     "angular": "^1.6.4",
     "angular-route": "^1.6.5",
-    "materialize-css": "^0.99.0"
+    "angularjs-toaster": "^2.1.0",
+    "materialize-css": "^0.99.0",
+    "satellizer": "^0.15.5"
   }
 }

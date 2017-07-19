@@ -22,10 +22,10 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in users" ng-click="doEdit(row)" style="cursor: pointer">
-                        <td>{{ row.id }}</td>
-                        <td>{{ row.name_f }} {{ row.name_l }}</td>
-                        <td>{{ row.login }}</td>
-                        <td>{{ row.email }}</td>
+                        <td>{{ row.Id }}</td>
+                        <td>{{ row.Nome }} {{ row.SobreNome }}</td>
+                        <td>{{ row.Login }}</td>
+                        <td>{{ row.Email }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -41,7 +41,7 @@
                 <h4 class="cyan-text">Usuário</h4>
             </div>
             <div class="col s2">
-                <button type="button" ng-click="doDelete(user)" class="btn btn-small cyan darken-3 waves-effect right">Excluir</button>
+                <button type="button" ng-click="delUsuario(user)" class="btn btn-small cyan darken-3 waves-effect right">Excluir</button>
             </div>
         </div>
         <div class="row">
@@ -49,19 +49,19 @@
                 <form class="" action="index.html" method="post">
                     <div class="input-field col s6">
                         <label>Nome</label>
-                        <input ng-model="user.name_f" type="text" class="validate" autofocus>
+                        <input ng-model="user.Nome" type="text" class="validate" autofocus>
                     </div>
                     <div class="input-field col s6">
                         <label>Sobrenome</label>
-                        <input ng-model="user.name_l" type="text" class="validate">
+                        <input ng-model="user.SobreNome" type="text" class="validate">
                     </div>
                     <div class="input-field col s6">
                         <label>Login</label>
-                        <input ng-model="user.login" type="text" class="validate">
+                        <input ng-model="user.Login" type="text" class="validate">
                     </div>
                     <div class="input-field col s6">
                         <label>Email</label>
-                        <input ng-model="user.email" type="email" class="validate">
+                        <input ng-model="user.Email" type="email" class="validate">
                     </div>
                     <div class="input-field col s6">
                         <label>Senha</label>
@@ -76,7 +76,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn waves-effect cyan darken-3" ng-click="doSave(user)">Salvar</button>
+        <button class="btn waves-effect cyan darken-3" ng-click="setUsuario(user)">Salvar</button>
         <button class="btn-flat waves-effect" ng-click="doCancel()">Cancelar</button>
     </div>
 </div>
