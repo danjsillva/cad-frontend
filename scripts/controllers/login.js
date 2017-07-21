@@ -5,6 +5,8 @@ angular
 .module('cadweb')
 .controller('LoginCtrl', function ($rootScope, $scope, $location, $auth) {
     $scope.doLogin = function (user) {
+        $scope.loginStatus = undefined;
+
         params = "grant_type=password&username=" + user.username + "&password=" + user.password
 
         $auth.login(params).then(
@@ -13,8 +15,9 @@ angular
 
                 $location.path('/');
             },
-            function (response) {
-                console.log(response);
+            function (error) {
+                $scope.loginStatus = error.data.error_description;
+                $scope.user.password = undefined;
             }
         );
     };

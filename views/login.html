@@ -1,4 +1,9 @@
-<div class="container">
+<div class="header white-text cyan home-title">
+    <div class="container">
+        <h4>&nbsp;</h4>
+    </div>
+</div>
+<div class="container" style="margin-top: -170px;">
     <div class="row">
         <p></p>
     </div>
@@ -13,17 +18,20 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <label>Login</label>
-                        <input ng-model="user.username" type="text" class="validate">
+                        <input ng-model="user.username" type="text" class="validate" autofocus>
                     </div>
                     <div class="input-field col s12">
                         <label>Senha</label>
                         <input ng-model="user.password" type="password" class="validate">
                     </div>
+                    <div class="input-field col s12 center">
+                        {{ loginStatus }}
+                    </div>
                     <div class="input-field col">
                         <a ng-click="doLogin(user)" class="waves-effect waves-light cyan darken-3 btn"><i class="material-icons left">send</i> Entrar</a>
                     </div>
                     <div class="col right">
-                        <small><a href="" class="grey-text left" style="text-align: right">Recuperar senha</a></small>
+                        <small><a href="" class="grey-text left" style="text-align: right; margin-top: 15px">Recuperar senha</a></small>
                     </div>
 
                 </div>

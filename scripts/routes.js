@@ -19,6 +19,11 @@ angular
         templateUrl: 'views/usuario.html',
         controller: 'UsuarioCtrl',
         controllerAs: 'usuario'
+    })
+    .when('/docente', {
+        templateUrl: 'views/docente.html',
+        controller: 'DocenteCtrl',
+        controllerAs: 'docente'
     });
 
     // $locationProvider.html5Mode(true);

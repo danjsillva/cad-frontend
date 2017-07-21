@@ -26,7 +26,7 @@ angular
         }
     });
 
-    // logout... reseta as variaveis de sessao
+    // logout...
     $rootScope.doLogout = function () {
         $auth.logout();
     };

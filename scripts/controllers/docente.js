@@ -3,43 +3,45 @@
 */
 angular
 .module('cadweb')
-.controller('UsuarioCtrl', function (api, $scope, $http, toaster, notification) {
-    $scope.users = [];
-    $scope.user = {};
+.controller('DocenteCtrl', function (api, $scope, $http, toaster, notification) {
+    $scope.docentes = [];
+    $scope.docente = {};
 
     // lista todos os registros
-    $scope.getUsuarios = function () {
-        var url = api.baseUrl + '/usuarios';
+    $scope.getDocentes = function () {
+        var url = api.baseUrl + '/docentes';
 
         $http.get(url).then(
             function (response) {
-                $scope.users = response.data;
+                console.log(response);
+                $scope.docentes = response.data;
             },
             function (response) {
+                console.log(response);
                 notification.show(response.status);
             }
         );
     };
-    $scope.getUsuarios();
+    $scope.getDocentes();
 
     // salva um registro (pode ser inserindo ou editando)
-    $scope.setUsuario = function (user) {
-        var url = api.baseUrl + '/usuarios';
+    $scope.setDocente = function (docente) {
+        var url = api.baseUrl + '/docentes';
 
         // se nao tem id adiciona novo registro (se nao... atualiza o registro existente)
-        if (!user.id) {
-            $http.post(url, user).then(
+        if (!docente.id) {
+            $http.post(url, docente).then(
                 function (response) {
-                    $scope.getUsuarios();
+                    $scope.getDocentes();
                 },
                 function (response) {
                     notification.show(response.status);
                 }
             );
         } else {
-            $http.put(url, user).then(
+            $http.put(url, docente).then(
                 function (response) {
-                    $scope.getUsuarios();
+                    $scope.getDocentes();
                 },
                 function (response) {
                     notification.show(response.status);
@@ -47,42 +49,42 @@ angular
             );
         }
 
-        $('#modal-usuario').modal('close');
-        $scope.user = {};
+        $('#modal-docente').modal('close');
+        $scope.docente = {};
     };
 
     // inativa um registro
-    $scope.delUsuario = function (user) {
-        user.IsAtivo = false;
+    $scope.delDocente = function (docente) {
+        docente.IsAtivo = false;
 
-        var url = api.baseUrl + '/usuarios';
+        var url = api.baseUrl + '/docentes';
 
         // atualiza o registro com IsAtivo = false;
-        $http.put(url, user).then(
+        $http.put(url, docente).then(
             function (response) {
-                $scope.getUsuarios();
+                $scope.getDocentes();
             },
             function (response) {
                 toaster.pop('error', "Usuário [Erro: " + response.status + "]", "Não foi possível obter uma resposta válida do servidor.");
             }
         );
 
-        $('#modal-usuario').modal('close');
-        $scope.user = {};
+        $('#modal-docente').modal('close');
+        $scope.docente = {};
     };
 
     $scope.doNew = function () {
-        $scope.user = {};
-        $('#modal-usuario').modal('open');
+        $scope.docente = {};
+        $('#modal-docente').modal('open');
     };
 
-    $scope.doEdit = function (user) {
-        $scope.user = user;
-        $('#modal-usuario').modal('open');
+    $scope.doEdit = function (docente) {
+        $scope.docente = docente;
+        $('#modal-docente').modal('open');
     };
 
     $scope.doCancel = function () {
-        $('#modal-usuario').modal('close');
-        $scope.user = {};
+        $('#modal-docente').modal('close');
+        $scope.docente = {};
     };
 });
