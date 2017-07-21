@@ -24,6 +24,16 @@ angular
         templateUrl: 'views/docente.html',
         controller: 'DocenteCtrl',
         controllerAs: 'docente'
+    })
+    .when('/discente', {
+        templateUrl: 'views/discente.html',
+        controller: 'DiscenteCtrl',
+        controllerAs: 'discente'
+    })
+    .when('/setor', {
+        templateUrl: 'views/setor.html',
+        controller: 'SetorCtrl',
+        controllerAs: 'setor'
     });
 
     // $locationProvider.html5Mode(true);

@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.6.4",
+    "angular-http-loader": "^0.1.8",
     "angular-route": "^1.6.5",
     "angularjs-toaster": "^2.1.0",
     "materialize-css": "^0.99.0",

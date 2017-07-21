@@ -10,6 +10,7 @@ angular
     'ngRoute',
     'satellizer',
     'toaster',
+    'ng.httpLoader',
 ])
 .constant('api', {
     baseUrl: domainUrl + '/api/v1',
@@ -30,4 +31,7 @@ angular
     $rootScope.doLogout = function () {
         $auth.logout();
     };
+})
+.config(function (httpMethodInterceptorProvider) {
+    httpMethodInterceptorProvider.whitelistDomain(domainUrl);
 });

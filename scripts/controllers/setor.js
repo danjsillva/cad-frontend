@@ -3,43 +3,43 @@
 */
 angular
 .module('cadweb')
-.controller('DocenteCtrl', function (api, $scope, $http, toaster, notification) {
-    $scope.docentes = [];
-    $scope.docente = {};
+.controller('SetorCtrl', function (api, $scope, $http, toaster, notification) {
+    $scope.setores = [];
+    $scope.setor = {};
 
     // lista todos os registros
-    $scope.getDocentes = function () {
-        var url = api.baseUrl + '/docentes';
+    $scope.getSetores = function () {
+        var url = api.baseUrl + '/setores';
 
         $http.get(url).then(
             function (response) {
-                $scope.docentes = response.data;
+                $scope.setores = response.data;
             },
             function (response) {
                 notification.show(response.status);
             }
         );
     };
-    $scope.getDocentes();
+    $scope.getSetores();
 
     // salva um registro (pode ser inserindo ou editando)
-    $scope.setDocente = function (docente) {
-        var url = api.baseUrl + '/docentes';
+    $scope.setSetor = function (setor) {
+        var url = api.baseUrl + '/setores';
 
         // se nao tem id adiciona novo registro (se nao... atualiza o registro existente)
-        if (!docente.id) {
-            $http.post(url, docente).then(
+        if (!setor.id) {
+            $http.post(url, setor).then(
                 function (response) {
-                    $scope.getDocentes();
+                    $scope.getSetores();
                 },
                 function (response) {
                     notification.show(response.status);
                 }
             );
         } else {
-            $http.put(url, docente).then(
+            $http.put(url, setor).then(
                 function (response) {
-                    $scope.getDocentes();
+                    $scope.getSetores();
                 },
                 function (response) {
                     notification.show(response.status);
@@ -47,42 +47,42 @@ angular
             );
         }
 
-        $('#modal-docente').modal('close');
-        $scope.docente = {};
+        $('#modal-setor').modal('close');
+        $scope.setor = {};
     };
 
     // inativa um registro
-    $scope.delDocente = function (docente) {
-        docente.IsAtivo = false;
+    $scope.delSetor = function (setor) {
+        setor.IsAtivo = false;
 
-        var url = api.baseUrl + '/docentes';
+        var url = api.baseUrl + '/setores';
 
         // atualiza o registro com IsAtivo = false;
-        $http.put(url, docente).then(
+        $http.put(url, setor).then(
             function (response) {
-                $scope.getDocentes();
+                $scope.getSetores();
             },
             function (response) {
                 toaster.pop('error', "Usuário [Erro: " + response.status + "]", "Não foi possível obter uma resposta válida do servidor.");
             }
         );
 
-        $('#modal-docente').modal('close');
-        $scope.docente = {};
+        $('#modal-setor').modal('close');
+        $scope.setor = {};
     };
 
     $scope.doNew = function () {
-        $scope.docente = {};
-        $('#modal-docente').modal('open');
+        $scope.setor = {};
+        $('#modal-setor').modal('open');
     };
 
-    $scope.doEdit = function (docente) {
-        $scope.docente = docente;
-        $('#modal-docente').modal('open');
+    $scope.doEdit = function (setor) {
+        $scope.setor = setor;
+        $('#modal-setor').modal('open');
     };
 
     $scope.doCancel = function () {
-        $('#modal-docente').modal('close');
-        $scope.docente = {};
+        $('#modal-setor').modal('close');
+        $scope.setor = {};
     };
 });

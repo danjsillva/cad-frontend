@@ -25,7 +25,7 @@
                         <li><a href="#!/usuario" class="cyan-text">Cadastro de Usuário</a></li>
                         <li><a href="#!/discente" class="cyan-text">Cadastro de Discente</a></li>
                         <li><a href="#!/docente" class="cyan-text">Cadastro de Docente</a></li>
-                        <li><a href="#!/setore" class="cyan-text">Cadastro de Setore</a></li>
+                        <li><a href="#!/setor" class="cyan-text">Cadastro de Setor</a></li>
                     </ul>
                     <ul id="dd-project" class="dropdown-content" >
                         <li><a href="#!/pesquisa" class="cyan-text">Projetos de Pesquisa</a></li>
@@ -43,6 +43,8 @@
         </nav>
 
         <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+
+        <div ng-http-loader template="views/spinner.html"></div>
 
         <div id="content" ng-view></div>
 
@@ -80,6 +82,7 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
     <script src="node_modules/satellizer/dist/satellizer.min.js"></script>
+    <script src="node_modules/angular-http-loader/app/package/js/angular-http-loader.min.js"></script>
 
     <!-- app scripts -->
     <script src="scripts/app.js"></script>
@@ -91,5 +94,7 @@
     <script src="scripts/controllers/home.js"></script>
     <script src="scripts/controllers/usuario.js"></script>
     <script src="scripts/controllers/docente.js"></script>
+    <script src="scripts/controllers/discente.js"></script>
+    <script src="scripts/controllers/setor.js"></script>
 </body>
 </html>

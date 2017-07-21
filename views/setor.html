@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h4 class="cyan-text">Cadastro de Setor</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <button ng-click="doNew()" class="btn waves-effect cyan darken-3 right">Novo Setor</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <table class="bordered striped highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Responsável</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in setores" ng-click="doEdit(row)" style="cursor: pointer">
+                        <td>{{ row.id }}</td>
+                        <td>{{ row.nome }}</td>
+                        <td>{{ row.responsavel }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal-setor" class="modal modal-fixed-footer" style="max-width: 900px; width: 90%;">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col s10">
+                <h4 class="cyan-text">Setor</h4>
+            </div>
+            <div class="col s2">
+                <button type="button" ng-click="delSetor(setor)" class="btn btn-small cyan darken-3 waves-effect right">Excluir</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <form class="" action="index.html" method="post">
+                    <div class="input-field col s6">
+                        <label>Nome</label>
+                        <input ng-model="setor.nome" type="text" class="validate" autofocus>
+                    </div>
+                    <div class="input-field col s6">
+                        <label>Responsável</label>
+                        <input ng-model="setor.responsavel" type="text" class="validate">
+                    </div>
+                    <div class="input-field col s6">
+                        <label>Status</label>
+                        <input ng-model="setor.status" type="text" class="validate">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn waves-effect cyan darken-3" ng-click="setSetor(setor)">Salvar</button>
+        <button class="btn-flat waves-effect" ng-click="doCancel()">Cancelar</button>
+    </div>
+</div>
