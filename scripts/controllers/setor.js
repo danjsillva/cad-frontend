@@ -6,7 +6,6 @@ angular
 .controller('SetorCtrl', function (api, $scope, $http, toaster, notification) {
     $scope.setores = [];
     $scope.setor = {};
-    $scope.filtro = {status: true};
 
     // lista todos os registros
     $scope.getSetores = function () {
@@ -85,9 +84,5 @@ angular
     $scope.doCancel = function () {
         $('#modal-setor').modal('close');
         $scope.setor = {};
-    };
-
-    $scope.checkAtivos = function () {
-        $scope.filtro.status ? $scope.filtro.status = true : $scope.filtro.status = undefined;
     };
 });

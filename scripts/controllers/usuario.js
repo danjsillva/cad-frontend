@@ -6,7 +6,6 @@ angular
 .controller('UsuarioCtrl', function (api, $scope, $http, notification) {
     $scope.usuarios = [];
     $scope.usuario = {};
-    $scope.filtro = {isAtivo: true};
 
     // lista todos os registros
     $scope.getUsuarios = function () {
@@ -89,9 +88,5 @@ angular
     $scope.doCancel = function () {
         $('#modal-usuario').modal('close');
         $scope.usuario = {};
-    };
-
-    $scope.checkAtivos = function () {
-        $scope.filtro.isAtivo ? $scope.filtro.isAtivo = true : $scope.filtro.isAtivo = undefined;
     };
 });

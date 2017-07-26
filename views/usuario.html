@@ -13,7 +13,7 @@
             <label>Somente ativos</label>
             <div class="switch" style="margin-top: 10px;">
                 <label>
-                    <input type="checkbox" ng-model="filtro.isAtivo" ng-click="checkAtivos()">
+                    <input type="checkbox" ng-model="filtro.isAtivo" ng-click="filtro.isAtivo = (!filtro.isAtivo ? undefined : true)" ng-init="filtro.isAtivo = true">
                     <span class="lever"></span>
                 </label>
             </div>

@@ -6,7 +6,6 @@ angular
 .controller('DocenteCtrl', function (api, $scope, $http, toaster, notification) {
     $scope.docentes = [];
     $scope.docente = {};
-    $scope.filtro = {status: true};
 
     // lista todos os registros
     $scope.getDocentes = function () {
@@ -85,9 +84,5 @@ angular
     $scope.doCancel = function () {
         $('#modal-docente').modal('close');
         $scope.docente = {};
-    };
-
-    $scope.checkAtivos = function () {
-        $scope.filtro.status ? $scope.filtro.status = true : $scope.filtro.status = undefined;
     };
 });
