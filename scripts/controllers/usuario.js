@@ -3,9 +3,10 @@
 */
 angular
 .module('cadweb')
-.controller('UsuarioCtrl', function (api, $scope, $http, toaster, notification) {
-    $scope.users = [];
-    $scope.user = {};
+.controller('UsuarioCtrl', function (api, $scope, $http, notification) {
+    $scope.usuarios = [];
+    $scope.usuario = {};
+    $scope.filtro = {isAtivo: true};
 
     // lista todos os registros
     $scope.getUsuarios = function () {
@@ -13,7 +14,7 @@ angular
 
         $http.get(url).then(
             function (response) {
-                $scope.users = response.data;
+                $scope.usuarios = response.data;
             },
             function (response) {
                 notification.show(response.status);
@@ -23,12 +24,12 @@ angular
     $scope.getUsuarios();
 
     // salva um registro (pode ser inserindo ou editando)
-    $scope.setUsuario = function (user) {
+    $scope.setUsuario = function (usuario) {
         var url = api.baseUrl + '/usuarios';
 
         // se nao tem id adiciona novo registro (se nao... atualiza o registro existente)
-        if (!user.id) {
-            $http.post(url, user).then(
+        if (!usuario.id) {
+            $http.post(url, usuario).then(
                 function (response) {
                     $scope.getUsuarios();
                 },
@@ -37,7 +38,9 @@ angular
                 }
             );
         } else {
-            $http.put(url, user).then(
+            delete(usuario.senha);
+            console.log(usuario);
+            $http.put(url, usuario).then(
                 function (response) {
                     $scope.getUsuarios();
                 },
@@ -48,41 +51,47 @@ angular
         }
 
         $('#modal-usuario').modal('close');
-        $scope.user = {};
+        $scope.usuario = {};
     };
 
     // inativa um registro
-    $scope.delUsuario = function (user) {
-        user.IsAtivo = false;
+    $scope.delUsuario = function (usuario) {
+        usuario.IsAtivo = false;
 
         var url = api.baseUrl + '/usuarios';
 
         // atualiza o registro com IsAtivo = false;
-        $http.put(url, user).then(
+        $http.put(url, usuario).then(
             function (response) {
                 $scope.getUsuarios();
             },
             function (response) {
-                toaster.pop('error', "Usuário [Erro: " + response.status + "]", "Não foi possível obter uma resposta válida do servidor.");
+                notification.show(response.status);
             }
         );
 
         $('#modal-usuario').modal('close');
-        $scope.user = {};
+        $scope.usuario = {};
     };
 
     $scope.doNew = function () {
-        $scope.user = {};
+        $scope.usuario = {};
+        $scope.desativaSenha = false;
         $('#modal-usuario').modal('open');
     };
 
-    $scope.doEdit = function (user) {
-        $scope.user = user;
+    $scope.doEdit = function (usuario) {
+        $scope.usuario = usuario;
+        $scope.desativaSenha = true;
         $('#modal-usuario').modal('open');
     };
 
     $scope.doCancel = function () {
         $('#modal-usuario').modal('close');
-        $scope.user = {};
+        $scope.usuario = {};
+    };
+
+    $scope.checkAtivos = function () {
+        $scope.filtro.isAtivo ? $scope.filtro.isAtivo = true : $scope.filtro.isAtivo = undefined;
     };
 });

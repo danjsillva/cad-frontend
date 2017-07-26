@@ -6,6 +6,7 @@ angular
 .controller('DiscenteCtrl', function (api, $scope, $http, toaster, notification) {
     $scope.discentes = [];
     $scope.discente = {};
+    $scope.filtro = {status: true};
 
     // lista todos os registros
     $scope.getDiscentes = function () {
@@ -53,11 +54,11 @@ angular
 
     // inativa um registro
     $scope.delDiscente = function (discente) {
-        discente.IsAtivo = false;
+        discente.status = false;
 
         var url = api.baseUrl + '/discentes';
 
-        // atualiza o registro com IsAtivo = false;
+        // atualiza o registro com status = false;
         $http.put(url, discente).then(
             function (response) {
                 $scope.getDiscentes();
@@ -84,5 +85,9 @@ angular
     $scope.doCancel = function () {
         $('#modal-discente').modal('close');
         $scope.discente = {};
+    };
+
+    $scope.checkAtivos = function () {
+        $scope.filtro.status ? $scope.filtro.status = true : $scope.filtro.status = undefined;
     };
 });

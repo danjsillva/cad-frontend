@@ -1,12 +1,25 @@
 <div class="container">
     <div class="row">
         <div class="col s12">
-            <h4 class="cyan-text">Cadastro de Docente</h4>
+            <h4 class="teal-text">Cadastro de Docente</h4>
         </div>
     </div>
     <div class="row">
-        <div class="col s12">
-            <button ng-click="doNew()" class="btn waves-effect cyan darken-3 right">Novo Docente</button>
+        <div class="input-field col s6">
+            <label>Filtro</label>
+            <input ng-model="filtro.nome" type="text" class="validate" placeholder="Nome" autofocus>
+        </div>
+        <div class="col s2">
+            <label>Somente ativos</label>
+            <div class="switch" style="margin-top: 10px;">
+                <label>
+                    <input type="checkbox" ng-model="filtro.status" ng-click="checkAtivos()">
+                    <span class="lever"></span>
+                </label>
+            </div>
+        </div>
+        <div class="col s4">
+            <button ng-click="doNew()" class="btn waves-effect teal darken-3 right">Novo Docente</button>
         </div>
     </div>
     <div class="row">
@@ -21,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="row in docentes" ng-click="doEdit(row)" style="cursor: pointer">
+                    <tr ng-repeat="row in docentes | filter : filtro" ng-click="doEdit(row)" style="cursor: pointer">
                         <td>{{ row.id }}</td>
                         <td>{{ row.nome }}</td>
                         <td>{{ row.matricula }}</td>
@@ -37,11 +50,20 @@
 <div id="modal-docente" class="modal modal-fixed-footer" style="max-width: 900px; width: 90%;">
     <div class="modal-content">
         <div class="row">
-            <div class="col s10">
-                <h4 class="cyan-text">Docente</h4>
+            <div class="col s8">
+                <h4 class="teal-text">Docente</h4>
             </div>
             <div class="col s2">
-                <button type="button" ng-click="delDocente(docente)" class="btn btn-small cyan darken-3 waves-effect right">Excluir</button>
+                <div class="switch">
+                    <label>
+                        Ativo
+                        <input type="checkbox" ng-model="docente.status" ng-click="!docente.status">
+                        <span class="lever"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col s2">
+                <button type="button" ng-click="delDocente(docente)" class="btn btn-small teal darken-3 waves-effect right">Excluir</button>
             </div>
         </div>
         <div class="row">
@@ -67,16 +89,12 @@
                         <label>CPF</label>
                         <input ng-model="docente.cpf" type="text" class="validate">
                     </div>
-                    <div class="input-field col s6">
-                        <label>Status</label>
-                        <input ng-model="docente.status" type="text" class="validate">
-                    </div>
                 </form>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn waves-effect cyan darken-3" ng-click="setDocente(docente)">Salvar</button>
+        <button class="btn waves-effect teal darken-3" ng-click="setDocente(docente)">Salvar</button>
         <button class="btn-flat waves-effect" ng-click="doCancel()">Cancelar</button>
     </div>
 </div>

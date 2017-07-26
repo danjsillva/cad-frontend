@@ -6,6 +6,7 @@ angular
 .controller('DocenteCtrl', function (api, $scope, $http, toaster, notification) {
     $scope.docentes = [];
     $scope.docente = {};
+    $scope.filtro = {status: true};
 
     // lista todos os registros
     $scope.getDocentes = function () {
@@ -53,11 +54,11 @@ angular
 
     // inativa um registro
     $scope.delDocente = function (docente) {
-        docente.IsAtivo = false;
+        docente.status = false;
 
         var url = api.baseUrl + '/docentes';
 
-        // atualiza o registro com IsAtivo = false;
+        // atualiza o registro com status = false;
         $http.put(url, docente).then(
             function (response) {
                 $scope.getDocentes();
@@ -84,5 +85,9 @@ angular
     $scope.doCancel = function () {
         $('#modal-docente').modal('close');
         $scope.docente = {};
+    };
+
+    $scope.checkAtivos = function () {
+        $scope.filtro.status ? $scope.filtro.status = true : $scope.filtro.status = undefined;
     };
 });

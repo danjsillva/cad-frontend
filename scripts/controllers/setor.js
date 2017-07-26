@@ -6,6 +6,7 @@ angular
 .controller('SetorCtrl', function (api, $scope, $http, toaster, notification) {
     $scope.setores = [];
     $scope.setor = {};
+    $scope.filtro = {status: true};
 
     // lista todos os registros
     $scope.getSetores = function () {
@@ -53,11 +54,11 @@ angular
 
     // inativa um registro
     $scope.delSetor = function (setor) {
-        setor.IsAtivo = false;
+        setor.status = false;
 
         var url = api.baseUrl + '/setores';
 
-        // atualiza o registro com IsAtivo = false;
+        // atualiza o registro com status = false;
         $http.put(url, setor).then(
             function (response) {
                 $scope.getSetores();
@@ -84,5 +85,9 @@ angular
     $scope.doCancel = function () {
         $('#modal-setor').modal('close');
         $scope.setor = {};
+    };
+
+    $scope.checkAtivos = function () {
+        $scope.filtro.status ? $scope.filtro.status = true : $scope.filtro.status = undefined;
     };
 });

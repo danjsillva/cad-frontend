@@ -1,12 +1,25 @@
 <div class="container">
     <div class="row">
         <div class="col s12">
-            <h4 class="cyan-text">Cadastro de Usuário</h4>
+            <h4 class="teal-text">Cadastro de Usuário</h4>
         </div>
     </div>
     <div class="row">
-        <div class="col s12">
-            <button ng-click="doNew()" class="btn waves-effect cyan darken-3 right">Novo Usuário</button>
+        <div class="input-field col s6">
+            <label>Filtro</label>
+            <input ng-model="filtro.nome" type="text" class="validate" placeholder="Nome" autofocus>
+        </div>
+        <div class="col s2">
+            <label>Somente ativos</label>
+            <div class="switch" style="margin-top: 10px;">
+                <label>
+                    <input type="checkbox" ng-model="filtro.isAtivo" ng-click="checkAtivos()">
+                    <span class="lever"></span>
+                </label>
+            </div>
+        </div>
+        <div class="col s4">
+            <button ng-click="doNew()" class="btn waves-effect teal darken-3 right" ng-disabled="true" style="margin-top: 20px;">Novo Usuário</button>
         </div>
     </div>
     <div class="row">
@@ -21,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="row in users" ng-click="doEdit(row)" style="cursor: pointer">
+                    <tr ng-repeat="row in usuarios | filter : filtro" ng-click="doEdit(row)" style="cursor: pointer">
                         <td>{{ row.id }}</td>
                         <td>{{ row.nome }} {{ row.sobreNome }}</td>
                         <td>{{ row.login }}</td>
@@ -37,11 +50,20 @@
 <div id="modal-usuario" class="modal modal-fixed-footer" style="max-width: 900px; width: 90%;">
     <div class="modal-content">
         <div class="row">
-            <div class="col s10">
-                <h4 class="cyan-text">Usuário</h4>
+            <div class="col s8">
+                <h4 class="teal-text">Usuário</h4>
             </div>
             <div class="col s2">
-                <button type="button" ng-click="delUsuario(user)" class="btn btn-small cyan darken-3 waves-effect right">Excluir</button>
+                <div class="switch">
+                    <label>
+                        Ativo
+                        <input type="checkbox" ng-model="usuario.isAtivo" ng-click="!usuario.isAtivo">
+                        <span class="lever"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col s2">
+                <button type="button" ng-click="delUsuario(usuario)" class="btn btn-small teal darken-3 waves-effect right">Excluir</button>
             </div>
         </div>
         <div class="row">
@@ -49,34 +71,38 @@
                 <form class="" action="index.html" method="post">
                     <div class="input-field col s6">
                         <label>Nome</label>
-                        <input ng-model="user.nome" type="text" class="validate" autofocus>
+                        <input ng-model="usuario.nome" type="text" class="validate" autofocus>
                     </div>
                     <div class="input-field col s6">
                         <label>Sobrenome</label>
-                        <input ng-model="user.sobreNome" type="text" class="validate">
+                        <input ng-model="usuario.sobreNome" type="text" class="validate">
                     </div>
                     <div class="input-field col s6">
                         <label>Login</label>
-                        <input ng-model="user.login" type="text" class="validate">
+                        <input ng-model="usuario.login" type="text" class="validate">
                     </div>
                     <div class="input-field col s6">
                         <label>Email</label>
-                        <input ng-model="user.email" type="email" class="validate">
+                        <input ng-model="usuario.email" type="email" class="validate">
                     </div>
                     <div class="input-field col s6">
                         <label>Senha</label>
-                        <input ng-model="user.passw" type="password" class="validate">
+                        <input ng-model="usuario.senha" ng-disabled="desativaSenha" type="password" class="validate">
                     </div>
                     <div class="input-field col s6">
                         <label>Confirmação de senha</label>
-                        <input ng-model="user.passw_confirm" type="password" class="validate">
+                        <input ng-model="usuario.senha_confirm" ng-disabled="desativaSenha" type="password" class="validate">
+                    </div>
+                    <div class="input-field col s6">
+                        <label>Confirmação de senha</label>
+                        <button class="btn waves-effect teal darken-3 left" ng-click="doCancel()" ng-disabled="!desativaSenha">Alterar Senha</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn waves-effect cyan darken-3" ng-click="setUsuario(user)">Salvar</button>
+        <button class="btn waves-effect teal darken-3" ng-click="setUsuario(usuario)">Salvar</button>
         <button class="btn-flat waves-effect" ng-click="doCancel()">Cancelar</button>
     </div>
 </div>
