@@ -10,6 +10,8 @@ angular
     $scope.setUsuario = function (usuario) {
         var url = api.baseUrl + '/usuarios';
 
+        usuario.isAtivo = true;
+
         // adiciona novo usuario
         $http.post(url, usuario).then(
             function (response) {
