@@ -23,7 +23,7 @@ angular
 
         // se nao tiver logado redireciona para a pagina de login
         if (!$rootScope.isAuthenticated && $location.path() != '/') {
-            $location.path('/login');
+            // $location.path('/login');
         }
     });
 

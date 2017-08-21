@@ -34,6 +34,11 @@ angular
         templateUrl: 'views/setor.html',
         controller: 'SetorCtrl',
         controllerAs: 'setor'
+    })
+    .when('/pesquisa', {
+        templateUrl: 'views/pesquisa.html',
+        controller: 'PesquisaCtrl',
+        controllerAs: 'pesquisa'
     });
 
     // $locationProvider.html5Mode(true);

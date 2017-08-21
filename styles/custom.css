@@ -39,3 +39,9 @@ table > thead > tr {
 table > tbody > tr {
     line-height: 10px;
 }
+
+.icon-table {
+    line-height: 10px;
+    font-size: 20px;
+    color: grey;
+}
