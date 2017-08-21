@@ -1,0 +1,61 @@
+<div id="modal-atividade" class="modal modal-fixed-footer" style="max-width: 900px; width: 90%;">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col s10">
+                <h4 class="teal-text">Adicionar Atividade</h4>
+            </div>
+            <div class="input-field col s2 rigth" style="margin-top: 0px">
+                <input ng-model="atividade.reuniao" type="checkbox" ng-selected="false" id="reu" />
+                <label for="reu">Reunião</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <label>Descricao</label>
+                <input ng-model="atividade.descricao" type="text" class="validate" autofocus>
+            </div>
+            <div class="input-field col s9">
+                <label>Local</label>
+                <input ng-model="atividade.local" type="text" class="validate">
+            </div>
+            <div class="input-field col s3">
+                <label>Data</label>
+                <input ng-model="atividade.data" type="date" class="validate">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s10">
+                <h5 class="teal-text">Participantes</h5>
+            </div>
+            <div class="col s2">
+                <button ng-click="doNewAtividadeParticipante()" class="btn btn-small waves-effect teal darken-3 right" style="margin: 10px">Adicionar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table class="bordered striped highlight responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in atividade.participantes | filter : filtro" style="cursor: pointer">
+                            <td>{{ row.nome }}</td>
+                            <td>{{ row.tipo }}</td>
+                            <td style="text-align: right">
+                                <i title="Remover" class="material-icons icon-table" ng-click="remAtividadeParticipante($index)" style="color: black;">delete</i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn waves-effect teal darken-3" ng-click="doAddAtividade(atividade)">Salvar</button>
+        <button class="btn-flat waves-effect" ng-click="doCancelAtividade()">Cancelar</button>
+    </div>
+</div>

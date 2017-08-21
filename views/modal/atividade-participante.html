@@ -1,0 +1,29 @@
+<div id="modal-atividade-participante" class="modal modal-fixed-footer" style="max-width: 900px; width: 90%;">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col s8">
+                <h4 class="teal-text">Adicionar Participante na Atividade</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table class="bordered striped highlight responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in pesquisa.participantes" ng-click="doAddAtividadeParticpante(row)" style="cursor: pointer">
+                            <td>{{ row.id }}</td>
+                            <td>{{ row.nome }}</td>
+                            <td>{{ row.tipo }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

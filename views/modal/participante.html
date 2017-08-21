@@ -1,0 +1,59 @@
+<div id="modal-participante" class="modal modal-fixed-footer" style="max-width: 900px; width: 90%;">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col s8">
+                <h4 class="teal-text">Adicionar Participante</h4>
+            </div>
+            <div class="input-field col s4 rigth" style="margin-top: 0px">
+                <input ng-model="radioTipoParticipante" type="radio" ng-value="0" id="dis" selected/>
+                <label for="dis">Discentes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input ng-model="radioTipoParticipante" type="radio" ng-value="1" id="doc" />
+                <label for="doc">Docentes</label>
+            </div>
+        </div>
+        <div class="row" ng-if="radioTipoParticipante == 0">
+            <div class="col s12">
+                <table class="bordered striped highlight responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Matrícula</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in discentes | filter : filtro" ng-click="doAddParticipante(row, 0)" style="cursor: pointer">
+                            <td>{{ row.id }}</td>
+                            <td>{{ row.nome }}</td>
+                            <td>{{ row.matricula }}</td>
+                            <td>{{ row.email }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" ng-if="radioTipoParticipante == 1">
+            <div class="col s12">
+                <table class="bordered striped highlight responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Matrícula</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in docentes | filter : filtro" ng-click="doAddParticipante(row, 1)" style="cursor: pointer">
+                            <td>{{ row.id }}</td>
+                            <td>{{ row.nome }}</td>
+                            <td>{{ row.matricula }}</td>
+                            <td>{{ row.email }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

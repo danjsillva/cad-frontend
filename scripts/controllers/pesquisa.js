@@ -9,6 +9,7 @@ angular
     $scope.docentes = [];
     $scope.pesquisas = [];
     $scope.pesquisa = {};
+    $scope.atividade = {};
     $scope.radioTipoParticipante = 0;
     $scope.radioTipoAtividade = 0;
 
@@ -106,6 +107,10 @@ angular
 
     // ------------------------------------------ PARTICIPANTES
     $scope.doNewParticipante = function () {
+        if (!$scope.pesquisa.participantes) {
+            $scope.pesquisa.participantes = [];
+        }
+
         $('#modal-participante').modal('open');
     }
 
@@ -113,10 +118,6 @@ angular
         participante['tipo'] = tipo == 0 ? 'Discente' : 'Docente';
         participante['coordenador'] = 0;
         participante['comissao'] = 0;
-
-        if (!$scope.pesquisa.participantes) {
-            $scope.pesquisa.participantes = [];
-        }
 
         if ($scope.pesquisa.participantes.indexOf(participante) == -1) {
             $scope.pesquisa.participantes.push(participante);
@@ -133,29 +134,52 @@ angular
 
 
     // ------------------------------------------ ATIVIDADES
-    $scope.doNewAtividade = function () {
+    $scope.doNewAtividade = function (atividade) {
+        $scope.atividade = atividade ? atividade : {};
+
+        if (!$scope.pesquisa.atividades) {
+            $scope.pesquisa.atividades = [];
+        }
+
         $('#modal-atividade').modal('open');
     }
 
-    $scope.doAddAtividade = function (atividade, tipo) {
-        participante['tipo'] = tipo == 0 ? 'Discente' : 'Docente';
-        participante['coordenador'] = 0;
-        participante['comissao'] = 0;
-
-        if (!$scope.pesquisa.participantes) {
-            $scope.pesquisa.participantes = [];
-        }
-
-        if ($scope.pesquisa.participantes.indexOf(atividade) == -1) {
-            $scope.pesquisa.participantes.push(atividade);
-        }
+    $scope.doAddAtividade = function (atividade) {
+        $scope.pesquisa.atividades.push(atividade);
 
         $('#modal-atividade').modal('close');
     }
 
     $scope.remAtividade = function (index) {
         if (confirm("Tem certeza?")) {
-            $scope.pesquisa.participantes.splice(index, 1);
+            $scope.pesquisa.atividades.splice(index, 1);
+        }
+    }
+
+    $scope.doCancelAtividade = function (index) {
+        $('#modal-atividade').modal('close');
+    }
+
+    // ATIVIDADES PARTICIPANTES
+    $scope.doNewAtividadeParticipante = function () {
+        if (!$scope.atividade.participantes) {
+            $scope.atividade.participantes = [];
+        }
+
+        $('#modal-atividade-participante').modal('open');
+    }
+
+    $scope.doAddAtividadeParticpante = function (participante) {
+        if ($scope.atividade.participantes.indexOf(participante) == -1) {
+            $scope.atividade.participantes.push(participante);
+        }
+
+        $('#modal-atividade-participante').modal('close');
+    }
+
+    $scope.remAtividadeParticipante = function (index) {
+        if (confirm("Tem certeza?")) {
+            $scope.atividade.participantes.splice(index, 1);
         }
     }
 });
