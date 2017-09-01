@@ -10,6 +10,7 @@ angular
     $scope.setUsuario = function (usuario) {
         var url = api.baseUrl + '/usuarios';
 
+        usuario.SobreNome = "";
         usuario.isAtivo = true;
 
         // adiciona novo usuario
@@ -18,11 +19,11 @@ angular
                 $scope.getUsuarios();
             },
             function (response) {
-                notification.show(response.status);
+                notification.show(response.status, null);
             }
         );
 
-        $('#modal-usuario').modal('close');
+        $('#modal-usuario').modal('hide');
         $scope.usuario = {};
     };
 
@@ -42,16 +43,5 @@ angular
                 $scope.user.password = undefined;
             }
         );
-    };
-
-    $scope.doNew = function () {
-        $scope.usuario = {};
-        $scope.desativaSenha = false;
-        $('#modal-usuario').modal('open');
-    };
-
-    $scope.doCancel = function () {
-        $('#modal-usuario').modal('close');
-        $scope.usuario = {};
     };
 });

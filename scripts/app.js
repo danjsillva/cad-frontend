@@ -9,6 +9,7 @@ angular
 .module('cadweb', [
     'ngRoute',
     'satellizer',
+    'ui.bootstrap',
     'toaster',
     'ng.httpLoader',
 ])

@@ -4,6 +4,7 @@
 angular
 .module('cadweb')
 .controller('DocenteCtrl', function (api, $scope, $http, toaster, notification) {
+    $scope.filtro = {'status': true};
     $scope.docentes = [];
     $scope.docente = {};
 
@@ -16,11 +17,25 @@ angular
                 $scope.docentes = response.data;
             },
             function (response) {
-                notification.show(response.status);
+                notification.show(response.status, null);
             }
         );
     };
     $scope.getDocentes();
+
+    $scope.getDocente = function (id) {
+        var url = api.baseUrl + '/docentes/' + id;
+
+        $http.get(url).then(
+            function (response) {
+                $scope.docente = response.data[0];
+                $('#modal-docente').modal('show');
+            },
+            function (response) {
+                notification.show(response.status, null);
+            }
+        );
+    };
 
     // salva um registro (pode ser inserindo ou editando)
     $scope.setDocente = function (docente) {
@@ -30,24 +45,26 @@ angular
         if (!docente.id) {
             $http.post(url, docente).then(
                 function (response) {
+                    notification.show(response.status, "Docente adicionado!");
                     $scope.getDocentes();
                 },
                 function (response) {
-                    notification.show(response.status);
+                    notification.show(response.status, null);
                 }
             );
         } else {
             $http.put(url, docente).then(
                 function (response) {
+                    notification.show(response.status, "Docente salvo!");
                     $scope.getDocentes();
                 },
                 function (response) {
-                    notification.show(response.status);
+                    notification.show(response.status, null);
                 }
             );
         }
 
-        $('#modal-docente').modal('close');
+        $('#modal-docente').modal('hide');
         $scope.docente = {};
     };
 
@@ -63,26 +80,11 @@ angular
                 $scope.getDocentes();
             },
             function (response) {
-                toaster.pop('error', "Usuário [Erro: " + response.status + "]", "Não foi possível obter uma resposta válida do servidor.");
+                notification.show(response.status, null);
             }
         );
 
-        $('#modal-docente').modal('close');
-        $scope.docente = {};
-    };
-
-    $scope.doNew = function () {
-        $scope.docente = {};
-        $('#modal-docente').modal('open');
-    };
-
-    $scope.doEdit = function (docente) {
-        $scope.docente = docente;
-        $('#modal-docente').modal('open');
-    };
-
-    $scope.doCancel = function () {
-        $('#modal-docente').modal('close');
+        $('#modal-docente').modal('hide');
         $scope.docente = {};
     };
 });

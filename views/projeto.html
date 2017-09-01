@@ -1,0 +1,601 @@
+<ol class="breadcrumb" style="margin-top:80px;">
+    <li class="breadcrumb-item">Projetos</a></li>
+    <li class="breadcrumb-item active text-info" ng-click="detalhesprojeto = false">Projetos de {{ tipoprojeto }}</li>
+    <li class="breadcrumb-item active text-info" ng-if="detalhesprojeto">Projeto {{ projeto.id }}</li>
+</ol>
+<div class="container" ng-if="!detalhesprojeto">
+    <div class="row">
+        <div class="col-12">
+            <h4>Projetos de {{tipoprojeto}}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-6">
+            <label>Filtro</label>
+            <input class="form-control" ng-model="filtro.nome" type="text" placeholder="Nome" autofocus>
+        </div>
+        <div class="form-group col-3">
+            <label>Status</label>
+            <div class="btn-group btn-block dropdown">
+                <button type="button" class="btn btn-info btn-block">
+                    <span ng-if="filtro.status == undefined">Todos</span>
+                    <span ng-if="filtro.status == 1">Iniciação</span>
+                    <span ng-if="filtro.status == 2">Planejamento</span>
+                    <span ng-if="filtro.status == 3">Execução</span>
+                    <span ng-if="filtro.status == 4">Controle</span>
+                    <span ng-if="filtro.status == 5">Finalização</span>
+                </button>
+                <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" ng-click="filtro.status = undefined">Todos</a>
+                    <a class="dropdown-item" ng-click="filtro.status = 1">Iniciação</a>
+                    <a class="dropdown-item" ng-click="filtro.status = 2">Planejamento</a>
+                    <a class="dropdown-item" ng-click="filtro.status = 3">Execução</a>
+                    <a class="dropdown-item" ng-click="filtro.status = 4">Controle</a>
+                    <a class="dropdown-item" ng-click="filtro.status = 5">Finalização</a>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-3">
+            <button class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#modal-projeto" ng-click="projeto = {status:1}" style="margin-top:32px">Novo Projeto</button>
+        </div>
+    </div>
+    <div class="row" ng-if="projetos.length > 0">
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="bg-info text-light">
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in projetos | filter : filtro" ng-click="getProjeto(row.id)" style="cursor: pointer">
+                        <td>{{ row.id }}</td>
+                        <td>{{ row.nome }}</td>
+                        <td>{{ row.data_Inicio | date: 'dd/MM/yyyy' }}</td>
+                        <td>
+                            <span ng-if="row.status == 1">Iniciação</span>
+                            <span ng-if="row.status == 2">Planejamento</span>
+                            <span ng-if="row.status == 3">Execução</span>
+                            <span ng-if="row.status == 4">Controle</span>
+                            <span ng-if="row.status == 5">Finalização</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- detalhes do projeto -->
+<div class="" ng-if="detalhesprojeto">
+    <!-- ---------------- detalhes ---------------- -->
+    <div class="card">
+        <div class="card-header" style="background-color: white;">
+            <div class="row" style="height:30px">
+                <div class="col-10">
+                    <h4>Detalhes do projeto</h4>
+                </div>
+                <div class="form-group col-2">
+                    <div class="right">
+                        <button class="btn btn-sm btn-info btn-block" data-toggle="modal" data-target="#modal-projeto">Alterar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-8">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><b>Código</b></td>
+                                <td>{{ projeto.id }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Nome</b></td>
+                                <td>{{ projeto.nome }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Descrição</b></td>
+                                <td>{{ projeto.descricao }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Semestre</b></td>
+                                <td>{{ projeto.semestre }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Início</b></td>
+                                <td>{{ projeto.data_Inicio | date: 'dd/MM/yyyy' }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Fim</b></td>
+                                <td>{{ projeto.data_fim | date: 'dd/MM/yyyy' }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Status</b></td>
+                                <td>
+                                    <span ng-if="projeto.status == 1">Iniciação</span>
+                                    <span ng-if="projeto.status == 2">Planejamento</span>
+                                    <span ng-if="projeto.status == 3">Execução</span>
+                                    <span ng-if="projeto.status == 4">Controle</span>
+                                    <span ng-if="projeto.status == 5">Finalização</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group col-4">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><b>Participantes</b></td>
+                                <td style="text-align: center">{{ participantesprojeto.length || 0 }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Atividades</b></td>
+                                <td style="text-align: center">{{ atividades.length || 0 }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Tarefas</b></td>
+                                <td style="text-align: center">{{ tarefas.length || 0 }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Anexos</b></td>
+                                <td style="text-align: center">{{ anexos.length || 0 }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- ---------------- participantes ---------------- -->
+    <div class="card">
+        <div class="card-header" style="background-color: white;">
+            <div class="row" style="height:30px">
+                <div class="col-10">
+                    <h4>Participantes do projeto</h4>
+                </div>
+                <div class="form-group col-2">
+                    <div class="right">
+                        <button class="btn btn-sm btn-info btn-block" data-toggle="modal" data-target="#modal-participante">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-12">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td><b>Nome</b></td>
+                                <td><b>Tipo</b></td>
+                                <td><b>Matrícula</b></td>
+                                <td><b>Email</b></td>
+                                <td style="text-align: center"><b>Ações</b></td>
+                            </tr>
+                            <tr ng-repeat="row in participantesprojeto" style="cursor: pointer;">
+                                <td>{{ row.discente.nome }}{{ row.docente.nome }}</td>
+                                <td>{{ row.tipoParticipante ? 'Docente' : 'Discente' }}</td>
+                                <td>{{ row.discente.matricula }}{{ row.docente.matricula }}</td>
+                                <td>{{ row.discente.email }}{{ row.docente.email }}</td>
+                                <td style="text-align: center">
+                                    <i title="Coordenação" class="fa fa-user" ng-click="row.coordenador = !row.coordenador; setParticipante(row, null, projeto.id, null, null)" ng-class="{'text-info': row.coordenador}" style="cursor: pointer;"></i> &nbsp;&nbsp;&nbsp;
+                                    <i title="Comissão" class="fa fa-users" ng-click="row.comissao = !row.comissao; setParticipante(row, null, projeto.id, null, null)" ng-class="{'text-info': row.comissao}" style="cursor: pointer;"></i> &nbsp;&nbsp;&nbsp;
+                                    <i title="Remover" class="fa fa-trash" ng-click="delParticipante(row.id, projeto.id)" style="color: black; cursor: pointer;"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- ---------------- atividades ---------------- -->
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header" style="background-color: white;">
+                    <div class="row" style="height:30px">
+                        <div class="form-group col-8">
+                            <h4>Atividades do projeto</h4>
+                        </div>
+                        <div class="form-group col-4">
+                            <div class="right" style="margin:">
+                                <button class="btn btn-sm btn-info btn-block" data-toggle="modal" data-target="#modal-atividade">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Descrição</b></td>
+                                        <td><b>Data</b></td>
+                                        <td style="text-align: right"><b></b></td>
+                                    </tr>
+                                    <tr ng-repeat="row in atividades" style="cursor: pointer;">
+                                        <td ng-click="getAtividade(row.id)">{{ row.descricao }}</td>
+                                        <td ng-click="getAtividade(row.id)">{{ row.data | date: 'dd/MM/yyyy' }}</td>
+                                        <td style="text-align: center">
+                                            <i title="Remover" class="fa fa-trash" ng-click="delAtividade(row.id, projeto.id)" style="color: black; cursor: pointer;"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ---------------- tarefas ---------------- -->
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header" style="background-color: white;">
+                    <div class="row" style="height:30px">
+                        <div class="form-group col-8">
+                            <h4>Tarefas do projeto</h4>
+                        </div>
+                        <div class="form-group col-4">
+                            <div class="right" style="margin:">
+                                <button class="btn btn-sm btn-info btn-block" data-toggle="modal" data-target="#modal-tarefa">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Descrição</b></td>
+                                        <td><b>Data</b></td>
+                                        <td><b>Status</b></td>
+                                        <td style="text-align: right"><b></b></td>
+                                    </tr>
+                                    <tr ng-repeat="row in tarefas" style="cursor: pointer;">
+                                        <td ng-click="getTarefa(row.id)">{{ row.descricao }}</td>
+                                        <td ng-click="getTarefa(row.id)">{{ row.data | date: 'dd/MM/yyyy' }}</td>
+                                        <td ng-click="getTarefa(row.id)">{{ row.status }}</td>
+                                        <td style="text-align: center">
+                                            <i title="Remover" class="fa fa-trash" ng-click="delTarefa(row.id, projeto.id)" style="color: black; cursor: pointer;"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- ---------------- anexos ---------------- -->
+    <div class="card">
+        <div class="card-header" style="background-color: white;">
+            <div class="row" style="height:30px">
+                <div class="col-10">
+                    <h4>Anexos do projeto</h4>
+                </div>
+                <div class="form-group col-2">
+                    <div class="right">
+                        <button class="btn btn-sm btn-info btn-block" data-toggle="modal" data-target="#modal-anexo">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-12">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td><b>Descrição</b></td>
+                                <td><b>Link</b></td>
+                                <td><b>Data</b></td>
+                                <td style="text-align: center"><b></b></td>
+                            </tr>
+                            <tr ng-repeat="row in anexosprojeto" style="cursor: pointer;">
+                                <td>{{ row.descricao }}</td>
+                                <td>{{ row.link }}</td>
+                                <td>{{ row.data | date: 'dd/MM/yyyy' }}</td>
+                                <td style="text-align: center">
+                                    <i title="Remover" class="fa fa-trash" ng-click="delAnexo(row.id, projeto.id)" style="color: black; cursor: pointer;"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal-projeto" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Projeto de {{tipoprojeto}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label>Nome</label>
+                        <input ng-model="projeto.nome" type="text" class="form-control" tabindex="1" autofocus>
+                    </div>
+                    <div class="form-group col-3">
+                        <label>Tipo</label>
+                        <input type="text" class="form-control" tabindex="2" value="{{tipoprojeto}}" readonly>
+                    </div>
+                    <div class="form-group col-3">
+                        <label>Status</label>
+                        <div class="btn-group btn-block dropdown">
+                            <button type="button" class="btn btn-info btn-block">
+                                <span ng-if="projeto.status == 1">Iniciação</span>
+                                <span ng-if="projeto.status == 2">Planejamento</span>
+                                <span ng-if="projeto.status == 3">Execução</span>
+                                <span ng-if="projeto.status == 4">Controle</span>
+                                <span ng-if="projeto.status == 5">Finalização</span>
+                            </button>
+                            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" ng-click="projeto.status = 1">Iniciação</a>
+                                <a class="dropdown-item" ng-click="projeto.status = 2">Planejamento</a>
+                                <a class="dropdown-item" ng-click="projeto.status = 3">Execução</a>
+                                <a class="dropdown-item" ng-click="projeto.status = 4">Controle</a>
+                                <a class="dropdown-item" ng-click="projeto.status = 5">Finalização</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label>Descrição</label>
+                        <textarea ng-model="projeto.descricao" class="form-control" tabindex="3"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-4">
+                        <label>Início</label>
+                        <input ng-model="projeto.data_Inicio" type="date" class="form-control" tabindex="4">
+                    </div>
+                    <div class="form-group col-4">
+                        <label>Fim</label>
+                        <input ng-model="projeto.data_fim" type="date" class="form-control" tabindex="5">
+                    </div>
+                    <div class="form-group col-4">
+                        <label>Semestre</label>
+                        <input ng-model="projeto.semestre" type="text" class="form-control" tabindex="6">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <label></label>
+                <button type="button" class="btn btn-info btn-block col-2" ng-click="setProjeto(projeto)">Salvar</button>
+                <label></label>
+                <button type="button" class="btn btn-light btn-block col-2" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal-participante" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar Participante</h5>
+                <div class="btn-group pull-right">
+                    <label class="btn btn-sm btn-info" ng-model="tipoparticipante" uib-btn-radio="0">Discentes</label>
+                    <label class="btn btn-sm btn-info" ng-model="tipoparticipante" uib-btn-radio="1">&nbsp;Docentes&nbsp;</label>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" ng-if="tipoparticipante == 0">
+                    <div class="col-12">
+                        <table class="table table-bordered table-hover">
+                            <tbody>
+                                <tr>
+                                    <td><b>#</b></td>
+                                    <td><b>Nome</b></td>
+                                    <td><b>Matrícula</b></td>
+                                    <td><b>Email</b></td>
+                                </tr>
+                                <tr ng-repeat="row in discentes" ng-click="setParticipante(row, tipoparticipante, projeto.id, null, null)" style="cursor: pointer">
+                                    <td>{{ row.id }}</td>
+                                    <td>{{ row.nome }}</td>
+                                    <td>{{ row.matricula }}</td>
+                                    <td>{{ row.email }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row" ng-if="tipoparticipante == 1">
+                    <div class="col-12">
+                        <table class="table table-bordered table-hover">
+                            <tbody>
+                                <tr>
+                                    <td><b>#</b></td>
+                                    <td><b>Nome</b></td>
+                                    <td><b>Matrícula</b></td>
+                                    <td><b>Email</b></td>
+                                </tr>
+                                <tr ng-repeat="row in docentes" ng-click="setParticipante(row, tipoparticipante, projeto.id, null, null)" style="cursor: pointer">
+                                    <td>{{ row.id }}</td>
+                                    <td>{{ row.nome }}</td>
+                                    <td>{{ row.matricula }}</td>
+                                    <td>{{ row.email }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal-atividade" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar Atividade</h5>
+                <button type="button" class="btn btn-sm btn-info pull-right" ng-click="">Adicionar participantes</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-8">
+                        <label>Descricao</label>
+                        <input ng-model="atividade.descricao" type="text" class="form-control" tabindex="1" autofocus>
+                    </div>
+                    <div class="form-group col-4">
+                        <label>Data</label>
+                        <input ng-model="atividade.data" type="date" class="form-control" tabindex="2">
+                    </div>
+                </div>
+                <div class="row" ng-if="atividade.id > 0">
+                    <div class="form-group col-12">
+                        <table class="table table-bordered table-hover">
+                            <tbody>
+                                <tr>
+                                    <td><b>Nome</b></td>
+                                    <td><b>Tipo</b></td>
+                                    <td><b>Matrícula</b></td>
+                                    <td><b>Email</b></td>
+                                    <td style="text-align: right"><b></b></td>
+                                </tr>
+                                <tr ng-repeat="row in participantesatividade" style="cursor: pointer;">
+                                    <td>{{ row.discente.nome }}{{ row.docente.nome }}</td>
+                                    <td>{{ row.tipoParticipante ? 'Docente' : 'Discente' }}</td>
+                                    <td>{{ row.discente.matricula }}{{ row.docente.matricula }}</td>
+                                    <td>{{ row.discente.email }}{{ row.docente.email }}</td>
+                                    <td style="text-align: center">
+                                        <i title="Coordenação" class="fa fa-user" ng-click="row.coordenador = !row.coordenador; setParticipante(row, null, projeto.id, null, null)" ng-class="{'text-info': row.coordenador}" style="cursor: pointer;"></i> &nbsp;&nbsp;&nbsp;
+                                        <i title="Comissão" class="fa fa-users" ng-click="row.comissao = !row.comissao; setParticipante(row, null, projeto.id, null, null)" ng-class="{'text-info': row.comissao}" style="cursor: pointer;"></i> &nbsp;&nbsp;&nbsp;
+                                        <i title="Remover" class="fa fa-trash" ng-click="delParticipante(row.id, projeto.id)" style="color: black; cursor: pointer;"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <label></label>
+                <button type="button" class="btn btn-info btn-block col-2" ng-click="setAtividade(atividade, projeto.id)">Salvar</button>
+                <label></label>
+                <button type="button" class="btn btn-light btn-block col-2" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal-tarefa" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar Tarefa</h5>
+                <button type="button" class="btn btn-sm btn-info pull-right" ng-click="">Adicionar participantes</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-8">
+                        <label>Descricao</label>
+                        <input ng-model="tarefa.descricao" type="text" class="form-control" tabindex="1" autofocus>
+                    </div>
+                    <div class="form-group col-4">
+                        <label>Data</label>
+                        <input ng-model="tarefa.data" type="date" class="form-control" tabindex="2">
+                    </div>
+                    <div class="form-group col-8">
+                        <label>Prioridade</label>
+                        <input ng-model="tarefa.prioridade" type="text" class="form-control" tabindex="3">
+                    </div>
+                    <div class="form-group col-4">
+                        <label>Status</label>
+                        <input ng-model="tarefa.status" type="text" class="form-control" tabindex="4">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <label></label>
+                <button type="button" class="btn btn-info btn-block col-2" ng-click="setTarefa(tarefa, projeto.id)">Salvar</button>
+                <label></label>
+                <button type="button" class="btn btn-light btn-block col-2" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal-anexo" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar anexo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-2">
+                    </div>
+                    <div class="form-group col-8">
+                        <input type="file" id="arquivoInput" />
+                        <br>
+                        Retorno JSON: <span id="mensagem"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <label></label>
+                <button type="button" class="btn btn-info btn-block col-2" ng-click="setAnexo()">Salvar</button>
+                <label></label>
+                <button type="button" class="btn btn-light btn-block col-2" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

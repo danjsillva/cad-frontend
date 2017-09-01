@@ -4,18 +4,18 @@
 angular
 .module('cadweb')
 .service('notification', function (toaster) {
-    this.show = function (status) {
-        switch (status) {
-            case 200:
-                toaster.pop('success', "Sucesso!", "Operação realizada.");
+    this.show = function (status, message) {
+        switch (true) {
+            case ((200 <= status <= 299) && (message != null)):
+                toaster.pop('success', "Sucesso!", message);
                 break;
-            case 400:
+            case (status == 400):
                 toaster.pop('error', "Erro [Status: " + status + "]", "Erro de cliente. Requisição inválida.");
                 break;
-            case 401:
+            case (status == 401):
                 toaster.pop('error', "Erro [Status: " + status + "]", "Erro de cliente. Não autorizado.");
                 break;
-            case 500:
+            case (status == 500):
                 toaster.pop('error', "Erro [Status: " + status + "]", "Erro interno do servidor (Internal Server Error).");
                 break;
             default:

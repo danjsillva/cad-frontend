@@ -10,14 +10,12 @@
                 <table class="bordered striped highlight responsive-table">
                     <thead>
                         <tr>
-                            <th>Código</th>
                             <th>Nome</th>
                             <th>Tipo</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="row in pesquisa.participantes" ng-click="doAddAtividadeParticpante(row)" style="cursor: pointer">
-                            <td>{{ row.id }}</td>
                             <td>{{ row.nome }}</td>
                             <td>{{ row.tipo }}</td>
                         </tr>

@@ -3,99 +3,185 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/angularjs-toaster/toaster.min.css">
+
+    <!-- <link rel="stylesheet" href="styles/sb-admin.min.css"> -->
     <link rel="stylesheet" href="styles/custom.css">
 </head>
 <body>
-    <div class="wrap">
-        <nav id="menu" class="teal" style="position: relative;">
-            <div class="container">
-                <div class="nav-wrapper">
-                    <!-- menu esquerdo -->
-                    <ul class="left">
-                        <li><a href="#"><i class="material-icons">home</i></a></li>
-                        <li><a href="" class="dropdown-button" data-activates="dd-admin">Administrativo</a></li>
-                        <li><a href="">Ensino</a></li>
-                        <li><a href="" class="dropdown-button" data-activates="dd-project" hover="true">Projetos</a></li>
-                        <li><a href="">Reuniões</a></li>
-                    </ul>
-                    <ul id="dd-admin" class="dropdown-content">
-                        <li><a href="#!/usuario" class="teal-text">Cadastro de Usuário</a></li>
-                        <li><a href="#!/discente" class="teal-text">Cadastro de Discente</a></li>
-                        <li><a href="#!/docente" class="teal-text">Cadastro de Docente</a></li>
-                        <li><a href="#!/setor" class="teal-text">Cadastro de Setor</a></li>
-                    </ul>
-                    <ul id="dd-project" class="dropdown-content" >
-                        <li><a href="#!/pesquisa" class="teal-text">Projetos de Pesquisa</a></li>
-                        <li><a href="#!/extensao" class="teal-text">Projetos de Extensão</a></li>
-                    </ul>
+    <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}" style="margin-top: 96px"></toaster-container>
 
-                    <!-- menu direito -->
-                    <ul class="right">
-                        <li><a href="#!/login" ng-click="doLogout()">
-                            {{ isAuthenticated ? 'Sair' : 'Entrar'}}
-                        </a></li>
+    <div ng-http-loader template="views/spinner.html"></div>
+
+    <div class="wrap">
+        <nav class="navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info fixed-top">
+            <div class="navbar-wrap">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- <a class="navbar-brand" href="#"><b>CAD WEB</b></a> -->
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#"><i class="fa fa-fw fa-home"></i><span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav" ng-if="isAuthenticated">
+                        <li class="nav-item active dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Administrativo
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#!/discente">Cadastro de Discentes</a>
+                                <a class="dropdown-item" href="#!/docente">Cadastro de Docente</a>
+                                <a class="dropdown-item" href="#!/setor">Cadastro de Setores</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#!/usuario">Cadastro de Usuários</a>
+                            </div>
+                        </li>
+                        <li class="nav-item active dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Projetos
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#!/projeto?tipo=0">Projetos de Pesquisa</a>
+                                <a class="dropdown-item" href="#!/projeto?tipo=1">Projetos de Extensão</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ensino
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Reuniões
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item" ng-if="isAuthenticated">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-fw fa-cogs"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#!/login" ng-click="doLogout()">
+                                <i class="fa fa-fw fa-sign-out" ng-if="isAuthenticated"></i>
+                                <i class="fa fa-fw fa-sign-in" ng-if="!isAuthenticated"></i>
+                                {{ isAuthenticated ? 'Sair' : 'Entrar'}}
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top" id="mainNav">
+            <a class="navbar-brand" href="#"><b>CAD Web</b></a>
 
-        <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div ng-http-loader template="views/spinner.html"></div>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav navbar-sidenav">
+                    <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Home">
+                        <a class="nav-link" href="#"> <i class="fa fa-fw fa-home"></i> <span class="nav-link-text">Home</span> </a>
+                    </li>
 
-        <div id="content" ng-view></div>
-
-        <footer id="footer" class="page-footer teal">
-            <div class="container">
-                <div class="row">
-                    <div class="col l6 s12">
-                        <h5 class="white-text">Contato</h5>
-                        <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-                    </div>
-                    <div class="col l4 offset-l2 s12">
-                        <h5 class="white-text">Social</h5>
-                        <ul>
-                            <li><a class="grey-text text-lighten-3" href="">Facebook</a></li>
-                            <li><a class="grey-text text-lighten-3" href="">Twitter</a></li>
-                            <li><a class="grey-text text-lighten-3" href="">Youtube</a></li>
-                            <li><a class="grey-text text-lighten-3" href="">Skype</a></li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Administrativo">
+                        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#menu-administrativo">
+                            <i class="fa fa-fw fa-sitemap"></i> <span class="nav-link-text">Administrativo</span>
+                        </a>
+                        <ul class="sidenav-second-level collapse" id="menu-administrativo">
+                            <li> <a href="#!/docente">Cadastro de Docentes</a> </li>
+                            <li> <a href="#!/discente">Cadastro de Discentes</a> </li>
+                            <li> <a href="#!/setor">Cadastro de Setores</a> </li>
                         </ul>
-                    </div>
-                </div>
+                    </li>
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ensino">
+                        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#menu-ensino">
+                            <i class="fa fa-fw fa-graduation-cap"></i> <span class="nav-link-text">Ensino</span>
+                        </a>
+                        <ul class="sidenav-second-level collapse" id="menu-ensino">
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Projetos">
+                        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#menu-projetos">
+                            <i class="fa fa-fw fa-newspaper-o"></i> <span class="nav-link-text">Projetos</span>
+                        </a>
+                        <ul class="sidenav-second-level collapse" id="menu-projetos">
+                            <li> <a href="#!/projeto?tipo=0">Projetos de pesquisa</a> </li>
+                            <li> <a href="#!/projeto?tipo=1">Projetos de extensão</a> </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-fw fa-cogs"></i> <span class="nav-link-text">Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav sidenav-toggler">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" id="sidenavToggler">
+                            <small>Extreme Go Horse Team</small>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!/login" ng-click="doLogout()">
+                            <i class="fa fa-fw fa-sign-out" ng-if="isAuthenticated"></i>
+                            <i class="fa fa-fw fa-sign-in" ng-if="!isAuthenticated"></i>
+                            {{ isAuthenticated ? 'Sair' : 'Entrar'}}
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="footer-copyright">
-                <div class="container">
-                    © 2017 Copyright
-                    <a class="grey-text text-lighten-4 right" href="#!">Extreme Go Horse Team</a>
-                </div>
-            </div>
-        </footer>
+        </nav> -->
+
+        <div class="content-wrapper">
+            <div class="container-fluid" ng-view></div>
+        </div>
     </div>
+
+    <footer class="footer">
+        <div class="footer-wrap">
+            © 2017 Copyright
+            <a href="#!" class="text-info">Extreme Go Horse Team</a>
+        </div>
+    </footer>
 
     <!-- npm modules -->
     <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-aria/angular-aria.min.js"></script>
+    <script src="node_modules/angular-animate/angular-animate.min.js"></script>
     <script src="node_modules/angular-route/angular-route.min.js"></script>
+    <script src="node_modules/angular-http-loader/app/package/js/angular-http-loader.min.js"></script>
     <script src="node_modules/angularjs-toaster/toaster.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
     <script src="node_modules/satellizer/dist/satellizer.min.js"></script>
-    <script src="node_modules/angular-http-loader/app/package/js/angular-http-loader.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
 
     <!-- app scripts -->
     <script src="scripts/app.js"></script>
     <script src="scripts/routes.js"></script>
     <script src="scripts/auth.js"></script>
     <script src="scripts/components/notification.js"></script>
-    <script src="scripts/components/dropdown-button.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/home.js"></script>
     <script src="scripts/controllers/usuario.js"></script>
     <script src="scripts/controllers/docente.js"></script>
     <script src="scripts/controllers/discente.js"></script>
     <script src="scripts/controllers/setor.js"></script>
-    <script src="scripts/controllers/pesquisa.js"></script>
+    <script src="scripts/controllers/projeto.js"></script>
 </body>
 </html>

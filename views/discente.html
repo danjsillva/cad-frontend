@@ -1,40 +1,43 @@
+<ol class="breadcrumb" style="margin-top:80px;">
+    <li class="breadcrumb-item">Administrativo</a></li>
+    <li class="breadcrumb-item active text-info">Cadastro de Discentes</li>
+</ol>
 <div class="container">
     <div class="row">
-        <div class="col s12">
-            <h4 class="teal-text">Cadastro de Discente</h4>
+        <div class="col-12">
+            <h4>Cadastro de Discentes</h4>
         </div>
     </div>
     <div class="row">
-        <div class="input-field col s6">
+        <div class="form-group col-5">
             <label>Filtro</label>
-            <input ng-model="filtro.nome" type="text" class="validate" placeholder="Nome" autofocus>
+            <input class="form-control" ng-model="filtro.nome" type="text" placeholder="Nome" autofocus>
         </div>
-        <div class="col s2">
-            <label>Somente ativos</label>
-            <div class="switch" style="margin-top: 10px;">
-                <label>
-                    <input type="checkbox" ng-model="filtro.status" ng-click="filtro.status = (!filtro.status ? undefined : true)" ng-init="filtro.status = true">
-                    <span class="lever"></span>
-                </label>
+        <div class="form-group col-4">
+            <label>Status</label>
+            <div class="btn-group">
+                <label class="btn btn-info" ng-model="filtro.status" uib-btn-radio="true">&nbsp;Ativo&nbsp;</label>
+                <label class="btn btn-info" ng-model="filtro.status" uib-btn-radio="undefined">&nbsp;Todos&nbsp;</label>
+                <label class="btn btn-info" ng-model="filtro.status" uib-btn-radio="false">Inativo</label>
             </div>
         </div>
-        <div class="col s4">
-            <button ng-click="doNew()" class="btn waves-effect teal darken-3 right">Novo Discente</button>
+        <div class="form-group col-3">
+            <button class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#modal-discente" ng-click="discente = {status:true}" style="margin-top:32px">Novo Discente</button>
         </div>
     </div>
-    <div class="row">
-        <div class="col s12">
-            <table class="bordered striped highlight responsive-table">
+    <div class="row" ng-if="discentes.length > 0">
+        <div class="col-12">
+            <table class="table table-s table-hover">
                 <thead>
-                    <tr>
-                        <th>Código</th>
+                    <tr class="bg-info text-light">
+                        <th>#</th>
                         <th>Nome</th>
                         <th>Matrícula</th>
                         <th>Email</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="row in discentes | filter : filtro" ng-click="doEdit(row)" style="cursor: pointer">
+                    <tr ng-repeat="row in discentes | filter : filtro" ng-click="getDiscente(row.id)" style="cursor: pointer">
                         <td>{{ row.id }}</td>
                         <td>{{ row.nome }}</td>
                         <td>{{ row.matricula }}</td>
@@ -47,54 +50,58 @@
 </div>
 
 <!-- Modal Structure -->
-<div id="modal-discente" class="modal modal-fixed-footer" style="max-width: 900px; width: 90%;">
-    <div class="modal-content">
-        <div class="row">
-            <div class="col s8">
-                <h4 class="teal-text">Discente</h4>
+<div id="modal-discente" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Discente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="col s2">
-                <div class="switch">
-                    <label>
-                        Ativo
-                        <input type="checkbox" ng-model="discente.status" ng-click="!discente.status">
-                        <span class="lever"></span>
-                    </label>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label>Nome</label>
+                        <input ng-model="discente.nome" type="text" class="form-control" tabindex="1" autofocus>
+                    </div>
+                    <div class="form-group col-2">
+
+                    </div>
+                    <div class="form-group col-4">
+                        <div class="btn-group pull-right" style="margin-top:32px">
+                            <label class="btn btn-info" ng-model="discente.status" uib-btn-radio="true">&nbsp;Ativo&nbsp;</label>
+                            <label class="btn btn-info" ng-model="discente.status" uib-btn-radio="false">Inativo</label>
+                        </div>
+                    </div>
+                    <!-- <div class="col-2">
+                    <label>&nbsp;</label>
+                    <button type="button" ng-click="delDiscente(discente)" class="btn btn-outline-danger btn-block">Excluir</button>
+                </div> -->
+                <div class="form-group col-6">
+                    <label>Matrícula</label>
+                    <input ng-model="discente.matricula" type="text" class="form-control" tabindex="2">
+                </div>
+                <div class="form-group col-6">
+                    <label>Endereço</label>
+                    <input ng-model="discente.endereco" type="text" class="form-control" tabindex="3">
+                </div>
+                <div class="form-group col-6">
+                    <label>Email</label>
+                    <input ng-model="discente.email" type="email" class="form-control" tabindex="4">
+                </div>
+                <div class="form-group col-6">
+                    <label>CPF</label>
+                    <input ng-model="discente.cpf" type="text" class="form-control" tabindex="5">
                 </div>
             </div>
-            <div class="col s2">
-                <button type="button" ng-click="delDiscente(discente)" class="btn btn-small teal darken-3 waves-effect right">Excluir</button>
-            </div>
         </div>
-        <div class="row">
-            <div class="col s12">
-                <form class="" action="index.html" method="post">
-                    <div class="input-field col s6">
-                        <label>Nome</label>
-                        <input ng-model="discente.nome" type="text" class="validate" autofocus>
-                    </div>
-                    <div class="input-field col s6">
-                        <label>Matrícula</label>
-                        <input ng-model="discente.matricula" type="text" class="validate">
-                    </div>
-                    <div class="input-field col s6">
-                        <label>Endereço</label>
-                        <input ng-model="discente.Endereco" type="text" class="validate">
-                    </div>
-                    <div class="input-field col s6">
-                        <label>Email</label>
-                        <input ng-model="discente.email" type="email" class="validate">
-                    </div>
-                    <div class="input-field col s6">
-                        <label>CPF</label>
-                        <input ng-model="discente.cpf" type="text" class="validate">
-                    </div>
-                </form>
-            </div>
+        <div class="modal-footer">
+            <label></label>
+            <button type="button" class="btn btn-info btn-block col-2" ng-click="setDiscente(discente)">Salvar</button>
+            <label></label>
+            <button type="button" class="btn btn-light btn-block col-2" data-dismiss="modal">Cancelar</button>
         </div>
     </div>
-    <div class="modal-footer">
-        <button class="btn waves-effect teal darken-3" ng-click="setDiscente(discente)">Salvar</button>
-        <button class="btn-flat waves-effect" ng-click="doCancel()">Cancelar</button>
-    </div>
+</div>
 </div>

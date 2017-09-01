@@ -4,6 +4,7 @@
 angular
 .module('cadweb')
 .controller('SetorCtrl', function (api, $scope, $http, toaster, notification) {
+    $scope.filtro = {'status': true};
     $scope.setores = [];
     $scope.setor = {};
 
@@ -16,11 +17,25 @@ angular
                 $scope.setores = response.data;
             },
             function (response) {
-                notification.show(response.status);
+                notification.show(response.status, null);
             }
         );
     };
     $scope.getSetores();
+
+    $scope.getSetor = function (id) {
+        var url = api.baseUrl + '/setores/' + id;
+
+        $http.get(url).then(
+            function (response) {
+                $scope.setor = response.data[0];
+                $('#modal-setor').modal('show');
+            },
+            function (response) {
+                notification.show(response.status, null);
+            }
+        );
+    };
 
     // salva um registro (pode ser inserindo ou editando)
     $scope.setSetor = function (setor) {
@@ -30,24 +45,26 @@ angular
         if (!setor.id) {
             $http.post(url, setor).then(
                 function (response) {
+                    notification.show(response.status, "Setor adicionado!");
                     $scope.getSetores();
                 },
                 function (response) {
-                    notification.show(response.status);
+                    notification.show(response.status, null);
                 }
             );
         } else {
             $http.put(url, setor).then(
                 function (response) {
+                    notification.show(response.status, "Setor salvo!");
                     $scope.getSetores();
                 },
                 function (response) {
-                    notification.show(response.status);
+                    notification.show(response.status, null);
                 }
             );
         }
 
-        $('#modal-setor').modal('close');
+        $('#modal-setor').modal('hide');
         $scope.setor = {};
     };
 
@@ -63,26 +80,11 @@ angular
                 $scope.getSetores();
             },
             function (response) {
-                toaster.pop('error', "Usuário [Erro: " + response.status + "]", "Não foi possível obter uma resposta válida do servidor.");
+                notification.show(response.status, null);
             }
         );
 
-        $('#modal-setor').modal('close');
-        $scope.setor = {};
-    };
-
-    $scope.doNew = function () {
-        $scope.setor = {};
-        $('#modal-setor').modal('open');
-    };
-
-    $scope.doEdit = function (setor) {
-        $scope.setor = setor;
-        $('#modal-setor').modal('open');
-    };
-
-    $scope.doCancel = function () {
-        $('#modal-setor').modal('close');
+        $('#modal-setor').modal('hide');
         $scope.setor = {};
     };
 });

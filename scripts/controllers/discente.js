@@ -4,6 +4,7 @@
 angular
 .module('cadweb')
 .controller('DiscenteCtrl', function (api, $scope, $http, toaster, notification) {
+    $scope.filtro = {'status': true};
     $scope.discentes = [];
     $scope.discente = {};
 
@@ -16,11 +17,25 @@ angular
                 $scope.discentes = response.data;
             },
             function (response) {
-                notification.show(response.status);
+                notification.show(response.status, null);
             }
         );
     };
     $scope.getDiscentes();
+
+    $scope.getDiscente = function (id) {
+        var url = api.baseUrl + '/discentes/' + id;
+
+        $http.get(url).then(
+            function (response) {
+                $scope.discente = response.data[0];
+                $('#modal-discente').modal('show');
+            },
+            function (response) {
+                notification.show(response.status, null);
+            }
+        );
+    };
 
     // salva um registro (pode ser inserindo ou editando)
     $scope.setDiscente = function (discente) {
@@ -30,24 +45,26 @@ angular
         if (!discente.id) {
             $http.post(url, discente).then(
                 function (response) {
+                    notification.show(response.status, "Discente adicionado!");
                     $scope.getDiscentes();
                 },
                 function (response) {
-                    notification.show(response.status);
+                    notification.show(response.status, null);
                 }
             );
         } else {
             $http.put(url, discente).then(
                 function (response) {
+                    notification.show(response.status, "Discente salvo!");
                     $scope.getDiscentes();
                 },
                 function (response) {
-                    notification.show(response.status);
+                    notification.show(response.status, null);
                 }
             );
         }
 
-        $('#modal-discente').modal('close');
+        $('#modal-discente').modal('hide');
         $scope.discente = {};
     };
 
@@ -63,26 +80,11 @@ angular
                 $scope.getDiscentes();
             },
             function (response) {
-                toaster.pop('error', "Usuário [Erro: " + response.status + "]", "Não foi possível obter uma resposta válida do servidor.");
+                notification.show(response.status, null);
             }
         );
 
-        $('#modal-discente').modal('close');
-        $scope.discente = {};
-    };
-
-    $scope.doNew = function () {
-        $scope.discente = {};
-        $('#modal-discente').modal('open');
-    };
-
-    $scope.doEdit = function (discente) {
-        $scope.discente = discente;
-        $('#modal-discente').modal('open');
-    };
-
-    $scope.doCancel = function () {
-        $('#modal-discente').modal('close');
+        $('#modal-discente').modal('hide');
         $scope.discente = {};
     };
 });

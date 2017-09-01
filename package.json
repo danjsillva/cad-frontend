@@ -10,10 +10,15 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.6.4",
+    "angular-animate": "^1.6.6",
+    "angular-aria": "^1.6.6",
     "angular-http-loader": "^0.1.8",
     "angular-route": "^1.6.5",
+    "angular-ui-bootstrap": "^2.5.0",
     "angularjs-toaster": "^2.1.0",
-    "materialize-css": "^0.99.0",
+    "bootstrap": "^4.0.0-beta",
+    "font-awesome": "^4.7.0",
+    "popper.js": "^1.12.3",
     "satellizer": "^0.15.5"
   }
 }

@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="row in discentes | filter : filtro" ng-click="doAddParticipante(row, 0)" style="cursor: pointer">
+                        <tr ng-repeat="row in discentes" ng-click="doAddParticipante(row, 0)" style="cursor: pointer">
                             <td>{{ row.id }}</td>
                             <td>{{ row.nome }}</td>
                             <td>{{ row.matricula }}</td>
@@ -45,7 +45,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="row in docentes | filter : filtro" ng-click="doAddParticipante(row, 1)" style="cursor: pointer">
+                        <tr ng-repeat="row in docentes" ng-click="doAddParticipante(row, 1)" style="cursor: pointer">
                             <td>{{ row.id }}</td>
                             <td>{{ row.nome }}</td>
                             <td>{{ row.matricula }}</td>

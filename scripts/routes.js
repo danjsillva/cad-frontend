@@ -35,10 +35,10 @@ angular
         controller: 'SetorCtrl',
         controllerAs: 'setor'
     })
-    .when('/pesquisa', {
-        templateUrl: 'views/pesquisa.html',
-        controller: 'PesquisaCtrl',
-        controllerAs: 'pesquisa'
+    .when('/projeto', {
+        templateUrl: 'views/projeto.html',
+        controller: 'ProjetoCtrl',
+        controllerAs: 'projeto'
     });
 
     // $locationProvider.html5Mode(true);
