@@ -273,7 +273,11 @@
                                     <tr ng-repeat="row in tarefas" style="cursor: pointer;">
                                         <td ng-click="getTarefa(row.id)">{{ row.descricao }}</td>
                                         <td ng-click="getTarefa(row.id)">{{ row.data | date: 'dd/MM/yyyy' }}</td>
-                                        <td ng-click="getTarefa(row.id)">{{ row.status }}</td>
+                                        <td ng-click="getTarefa(row.id)" style="text-align: center;">
+                                            <span ng-if="row.status == 0"><i class="fa fa-circle text-danger"></i></span>
+                                            <span ng-if="row.status == 1"><i class="fa fa-circle text-warning"></i></span>
+                                            <span ng-if="row.status == 2"><i class="fa fa-circle text-success"></i></span>
+                                        </td>
                                         <td style="text-align: center">
                                             <i title="Remover" class="fa fa-trash" ng-click="delTarefa(row.id, projeto.id)" style="color: black; cursor: pointer;"></i>
                                         </td>
@@ -310,13 +314,11 @@
                         <tbody>
                             <tr>
                                 <td><b>Descrição</b></td>
-                                <td><b>Link</b></td>
                                 <td><b>Data</b></td>
                                 <td style="text-align: center"><b></b></td>
                             </tr>
-                            <tr ng-repeat="row in anexosprojeto" style="cursor: pointer;">
-                                <td>{{ row.descricao }}</td>
-                                <td>{{ row.link }}</td>
+                            <tr ng-repeat="row in anexos">
+                                <td><a ng-href="{{row.link}}">{{ row.descricao }}</a></td>
                                 <td>{{ row.data | date: 'dd/MM/yyyy' }}</td>
                                 <td style="text-align: center">
                                     <i title="Remover" class="fa fa-trash" ng-click="delAnexo(row.id, projeto.id)" style="color: black; cursor: pointer;"></i>
@@ -434,7 +436,7 @@
                                     <td><b>Matrícula</b></td>
                                     <td><b>Email</b></td>
                                 </tr>
-                                <tr ng-repeat="row in discentes" ng-click="setParticipante(row, tipoparticipante, projeto.id, null, null)" style="cursor: pointer">
+                                <tr ng-repeat="row in discentes | filter: status != 1" ng-click="setParticipante(row, tipoparticipante, projeto.id, null, null)" style="cursor: pointer">
                                     <td>{{ row.id }}</td>
                                     <td>{{ row.nome }}</td>
                                     <td>{{ row.matricula }}</td>
@@ -454,7 +456,7 @@
                                     <td><b>Matrícula</b></td>
                                     <td><b>Email</b></td>
                                 </tr>
-                                <tr ng-repeat="row in docentes" ng-click="setParticipante(row, tipoparticipante, projeto.id, null, null)" style="cursor: pointer">
+                                <tr ng-repeat="row in docentes | filter: status != 1" ng-click="setParticipante(row, tipoparticipante, projeto.id, null, null)" style="cursor: pointer">
                                     <td>{{ row.id }}</td>
                                     <td>{{ row.nome }}</td>
                                     <td>{{ row.matricula }}</td>
@@ -549,13 +551,21 @@
                         <label>Data</label>
                         <input ng-model="tarefa.data" type="date" class="form-control" tabindex="2">
                     </div>
-                    <div class="form-group col-8">
+                    <div class="form-group col-3">
                         <label>Prioridade</label>
-                        <input ng-model="tarefa.prioridade" type="text" class="form-control" tabindex="3">
+                        <div class="btn-group pull-left">
+                            <label class="btn btn-info" ng-model="tarefa.prioridade" uib-btn-radio="0">Baixa</label>
+                            <label class="btn btn-info" ng-model="tarefa.prioridade" uib-btn-radio="1">Média</label>
+                            <label class="btn btn-info" ng-model="tarefa.prioridade" uib-btn-radio="2">&nbsp;Alta&nbsp;</label>
+                        </div>
                     </div>
                     <div class="form-group col-4">
                         <label>Status</label>
-                        <input ng-model="tarefa.status" type="text" class="form-control" tabindex="4">
+                        <div class="btn-group pull-left">
+                            <label class="btn" ng-class="{'btn-danger': tarefa.status == 0, 'btn-light': tarefa.status != 0}" ng-model="tarefa.status" uib-btn-radio="0">&nbsp;Pendente&nbsp;</label>
+                            <label class="btn" ng-class="{'btn-warning': tarefa.status == 1, 'btn-light': tarefa.status != 1}" ng-model="tarefa.status" uib-btn-radio="1">&nbsp;Execução&nbsp;</label>
+                            <label class="btn" ng-class="{'btn-success': tarefa.status == 2, 'btn-light': tarefa.status != 2}" ng-model="tarefa.status" uib-btn-radio="2">Concluída</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -580,19 +590,21 @@
                 </button>
             </div>
             <div class="modal-body">
+                <br>
+                <br>
                 <div class="row">
                     <div class="form-group col-2">
                     </div>
                     <div class="form-group col-8">
-                        <input type="file" id="arquivoInput" />
+                        <input type="file" class="btn btn-outline-info btn-block" id="arquivoInput" />
                         <br>
-                        Retorno JSON: <span id="mensagem"></span>
+                        <!-- Retorno JSON: <span id="mensagem"></span> -->
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <label></label>
-                <button type="button" class="btn btn-info btn-block col-2" ng-click="setAnexo()">Salvar</button>
+                <button type="button" class="btn btn-info btn-block col-2" ng-click="setAnexo(projeto.id)">Salvar</button>
                 <label></label>
                 <button type="button" class="btn btn-light btn-block col-2" data-dismiss="modal">Cancelar</button>
             </div>

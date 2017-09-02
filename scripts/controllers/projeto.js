@@ -17,6 +17,7 @@ angular
     $scope.tarefas = [];
     $scope.tarefa = {};
     $scope.participantestarefa = [];
+    $scope.anexos = {};
 
     $scope.tipoprojeto = $scope.params.tipo == 0 ? 'Pesquisa' : 'Extensão';
     $scope.tipoparticipante = 1;
@@ -47,6 +48,7 @@ angular
                 $scope.participantesatividade = response.data.participantesAtividade;
                 $scope.tarefas = response.data.tarefas;
                 $scope.participantestarefa = response.data.participantesTarefa;
+                $scope.anexos = response.data.anexosProjeto;
 
                 $scope.detalhesprojeto = true;
             },
@@ -285,7 +287,9 @@ angular
         }
     };
 
-    $scope.setAnexo = function () {
+    // -------------------------------------------------- anexos
+    $scope.setAnexo = function (idprojeto) {
+        var url = api.baseUrl + '/anexosprojeto';
         var formData = new FormData();
         var arquivo = document.getElementById("arquivoInput").files[0];
 
@@ -294,28 +298,48 @@ angular
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
-                var div = document.getElementById('mensagem');
-                var resposta = xhr.responseText;
-                div.innerHTML += resposta;
+                // var div = document.getElementById('mensagem');
+                // var resposta = xhr.responseText;
+                // div.innerHTML += resposta;
+                let anexo = {
+                    'projetoId': idprojeto,
+                    'descricao': arquivo.name,
+                    'link': xhr.responseText.replace(/[\\"]/g, ''),
+                    'data': new Date()
+                };
+
+                $http.post(url, anexo).then(
+                    function (response) {
+                        notification.show(response.status, "Anexo adicionado!");
+                        $scope.getProjeto(idprojeto);
+                        $('#modal-anexo').modal('hide');
+                    },
+                    function (response) {
+                        notification.show(response.status, null);
+                    }
+                );
             }
         }
-        
+
         xhr.open("POST", "http://cadweb.us-west-2.elasticbeanstalk.com/api/v1/anexosprojeto/anexo");
         xhr.send(formData);
     }
 
+    $scope.delAnexo = function (id, idprojeto) {
+        if (confirm('Tem certeza?')) {
+            var url = api.baseUrl + '/anexosprojeto/' + id;
 
-
-
-
-
-
-
-
-
-
-
-
+            $http.delete(url).then(
+                function (response) {
+                    notification.show(response.status, "Anexo removido!");
+                    $scope.getProjeto(idprojeto);
+                },
+                function (response) {
+                    notification.show(response.status, null);
+                }
+            );
+        }
+    }
 
     // lista todos os registros
     $scope.getDiscentes = function () {

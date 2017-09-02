@@ -32,16 +32,14 @@
                     <tr class="bg-info text-light">
                         <th>#</th>
                         <th>Nome</th>
-                        <th>Matrícula</th>
-                        <th>Email</th>
+                        <th>Responsável</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in setores | filter : filtro" ng-click="getSetor(row.id)" style="cursor: pointer">
                         <td>{{ row.id }}</td>
                         <td>{{ row.nome }}</td>
-                        <td>{{ row.matricula }}</td>
-                        <td>{{ row.email }}</td>
+                        <td>{{ row.responsavel }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -61,39 +59,21 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="form-group col-6">
+                    <div class="form-group col-5">
                         <label>Nome</label>
                         <input ng-model="setor.nome" type="text" class="form-control" tabindex="1" autofocus>
                     </div>
-                    <div class="form-group col-2">
-
-                    </div>
                     <div class="form-group col-4">
+                        <label>Responsável</label>
+                        <input ng-model="setor.responsavel" type="text" class="form-control" tabindex="2">
+                    </div>
+                    <div class="form-group col-3">
                         <div class="btn-group pull-right" style="margin-top:32px">
                             <label class="btn btn-info" ng-model="setor.status" uib-btn-radio="true">&nbsp;Ativo&nbsp;</label>
                             <label class="btn btn-info" ng-model="setor.status" uib-btn-radio="false">Inativo</label>
                         </div>
                     </div>
-                    <!-- <div class="col-2">
-                    <label>&nbsp;</label>
-                    <button type="button" ng-click="delSetor(setor)" class="btn btn-outline-danger btn-block">Excluir</button>
-                </div> -->
-                <div class="form-group col-6">
-                    <label>Matrícula</label>
-                    <input ng-model="setor.matricula" type="text" class="form-control" tabindex="2">
-                </div>
-                <div class="form-group col-6">
-                    <label>Endereço</label>
-                    <input ng-model="setor.endereco" type="text" class="form-control" tabindex="3">
-                </div>
-                <div class="form-group col-6">
-                    <label>Email</label>
-                    <input ng-model="setor.email" type="email" class="form-control" tabindex="4">
-                </div>
-                <div class="form-group col-6">
-                    <label>CPF</label>
-                    <input ng-model="setor.cpf" type="text" class="form-control" tabindex="5">
-                </div>
+
             </div>
         </div>
         <div class="modal-footer">
