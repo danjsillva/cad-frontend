@@ -1,11 +1,69 @@
 <div style="margin-top:120px;">
     <div class="container">
-        <h1>Bem-vindo ao CAD!</h1>
+        <h1 class="text-info">Bem-vindo ao CAD!</h1>
     </div>
 </div>
 <br>
 <div class="container">
-    <div class="row">
+    <div class="row" ng-if="isAuthenticated">
+        <div class="col-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h1 class="card-title pull-left" style="font-size: 64px; margin-bottom: 0px;"><i class="fa fa-briefcase"></i></h1>
+                    <h1 class="card-title pull-right" style="font-size: 64px; margin-bottom: 0px;">{{ projetos.length }}</h1>
+                    <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                </div>
+                <div class="card-header">Projetos cadastrados</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h1 class="card-title pull-left" style="font-size: 64px; margin-bottom: 0px;"><i class="fa fa-users"></i></h1>
+                    <h1 class="card-title pull-right" style="font-size: 64px; margin-bottom: 0px;">{{ discentes.length }}</h1>
+                    <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                </div>
+                <div class="card-footer">Discentes cadastrados</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h1 class="card-title pull-left" style="font-size: 64px; margin-bottom: 0px;"><i class="fa fa-users"></i></h1>
+                    <h1 class="card-title pull-right" style="font-size: 64px; margin-bottom: 0px;">{{ docentes.length }}</h1>
+                    <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                </div>
+                <div class="card-header">Docentes cadastrados</div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row"  ng-if="isAuthenticated">
+        <div class="col-12">
+            <div class="card text-center">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Novidades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Ajuda</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Projetos de pesquisa e extensão</h4>
+                    <p class="card-text">O módulo de pesquisas já está disponível! <b>Agora você pode gerenciar seus projetos de pesquisa e extensão através de uma interface incrível e simples.</b> O CAD Web fornece ferramentas para gestão de participantes, atividades, tarefas e anexos dos seus projetos. Aproveite!</p>
+                    <a href="#!/projeto" class="btn btn-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ir para projetos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="row" ng-if="!isAuthenticated">
         <div class="col-6">
             <!-- <i class="material-icons">send</i> -->
             <h5 class="text-info">Administrativo</h5>
@@ -30,11 +88,11 @@
 <br>
 
 <div>
-    <div class="container">
+    <div class="container" ng-if="!isAuthenticated">
         <h5>"Sit amet, consectetur!" <small> ~ Jon Doe</small></h5>
     </div>
 </div>
-<div class="container">
+<div class="container" ng-if="!isAuthenticated">
     <div class="row">
         <div class="col-4">
             <div class="icon-block">
